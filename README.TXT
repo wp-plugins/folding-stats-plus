@@ -13,16 +13,16 @@ Stable tag: 0.3
 This plugin is intended to show the current Folding@Home statistics for a given account.
 
 == Installation ==
-* upload the contents of the zip file to your wp-content/plugins directory
+* upload the contents of the zip file to your `wp-content/plugins` directory
 * ensure the folding-stats plugin directory has write permissions (used for file cache)
-* go to the Plugins main menu and find Folding@Home Stats, then click Activate
+* go to the Plugins main menu and find `Folding@Home Stats`, then click Activate
 * go to the Options / Folding Options menu and enter your account id, and the number of hours to wait to refresh the cache
 
 You are good to go.
 
 == Usage ==
 Use the included widget in your sidebar, or use the following code to include the stats anywhere in your theme.
-<php get_folding_stats(); ?>
+`get_folding_stats();`
 
 
 == Frequently Asked Questions ==
@@ -34,7 +34,7 @@ See it in action on my site:  http://www.pross.org.uk
 
 == Un-Installation ==
 * go to the Plugins main menu and find Folding@Home Stats Plus, then click Deactivate 
-* delete the files from your wp-content/plugins directory 
+* delete the files from your `wp-content/plugin`s directory 
 
 == Change Log ==
 See website
