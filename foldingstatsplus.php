@@ -3,7 +3,7 @@
 Plugin Name: Folding Stats Plus
 Plugin URI: http://www.pross.org.uk/category/plugins/
 Description: Display current Folding@Home stats
-Version: 0.3
+Version: 0.4
 Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
@@ -66,7 +66,7 @@ get_folding_stats();
 }
 function widget_folding() {
 $title = get_option('widget_folding_title');
-?><h2 class="widgettitle"><?php echo $title; ?></h2><?php
+?><li><h3 class="sbtitle"><?php echo $title; ?></h2><ul><?php
 folding();
 }
 	// Settings form
@@ -126,9 +126,9 @@ if (file_exists(FOLD_FILE)) {
 	$preout = '<div align="'.get_option('fold_align').'">';
 	$out = $preout . substr($out, 10, strlen($out));
 	if (get_option('fold_pic') == 'true') {
-	$out = $out . '<ul> <a href="http://folding.stanford.edu"><img src='.$fold_logo.' /></a> </ul>'; 
+	$out = $out . '<a href="http://folding.stanford.edu"><img src='.$fold_logo.' /></a>';
 	}
-	$out = $out . '</div>';
+	$out = $out . '</div></ul></li>';
 	echo $out;
 }
 function read_fold_site() {
