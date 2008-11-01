@@ -3,7 +3,7 @@
 Plugin Name: Folding Stats Plus
 Plugin URI: http://www.pross.org.uk/category/plugins/
 Description: Display current Folding@Home stats
-Version: 0.4
+Version: 0.5
 Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
@@ -66,7 +66,7 @@ get_folding_stats();
 }
 function widget_folding() {
 $title = get_option('widget_folding_title');
-?><li><h3 class="sbtitle"><?php echo $title; ?></h2><ul><?php
+?><li><h3 class="sbtitle"><?php echo $title; ?></h3><?php
 folding();
 }
 	// Settings form
@@ -126,9 +126,9 @@ if (file_exists(FOLD_FILE)) {
 	$preout = '<div align="'.get_option('fold_align').'">';
 	$out = $preout . substr($out, 10, strlen($out));
 	if (get_option('fold_pic') == 'true') {
-	$out = $out . '<a href="http://folding.stanford.edu"><img src='.$fold_logo.' /></a>';
+	$out = $out . '<a href="http://folding.stanford.edu"><img src="'.$fold_logo.'" alt="Folding@Home" /></a>';
 	}
-	$out = $out . '</div></ul></li>';
+	$out = $out . '</div></li>';
 	echo $out;
 }
 function read_fold_site() {
@@ -163,10 +163,10 @@ function read_fold_site() {
 	fclose($fh);
 	} else {
 	$stringData = $expire;
-	$stringData .= ' <li> Total Score: '.$credit.' </li>';
-	$stringData .= ' <li> Overall Rank: '.$ov_rank.' </li>';
-	$stringData .= ' <li> WorkUnits: '.$wu.' </li>';
-	$stringData .= ' <li> Last Update: '.$last_upd.' </li>';
+	$stringData .= '<ul><li> Total Score: '.$credit.'</li>';
+	$stringData .= '<li> Overall Rank: '.$ov_rank.'</li>';
+	$stringData .= '<li> WorkUnits: '.$wu.'</li>';
+	$stringData .= '<li> Last Update: '.$last_upd.'</li></ul>';
 	fwrite($fh, $stringData);
 	fclose($fh);
 	}
