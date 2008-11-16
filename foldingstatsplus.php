@@ -3,13 +3,11 @@
 Plugin Name: Folding Stats Plus
 Plugin URI: http://www.pross.org.uk/category/plugins/
 Description: Display current Folding@Home stats
-Version: 0.5
+Version: 0.6
 Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
-
 */
-
 /*	Code is forked with permission from Jason F. Irwin J²fi's version http://www.j2fi.net/2007/03/23/foldinghome-wordpress-plugin/
 	
 	Copyright 2007  Simon Prosser  (email: pross@pross.org.uk)
@@ -28,45 +26,17 @@ Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
-/* *****INSTRUCTIONS*****
-
-  Installation
-  ============
-  Upload the folder "folding-stats" into your "wp-content/plugins"
-  Log in to Wordpress Administration area, choose "Plugins" from the main menu, find "Folding@Home Stats", and click the "Activate" button 
-  Choose "Options->Folding Options" from the main menu and enter your Folding@Home Account ID and cache refresh hours
-
-  Upgrading
-  =========
-  Just overwrite the previous version and follow the Installation instructions.
-  
-  Configuration
-  =============
-  Either use the widget or insert the folowing code into your template:
-  <?php get_folding_stats(); ?>
-  
-  Uninstallation
-  ==============
-  Log in to Wordpress Administration area, choose “Plugins” from the main menu, find the name of the plugin “Folding@Home Stats”, and click the “Deactivate” button
-
-  ***********************
-  Change Log
-  ----------
-  See website
-*/
 function fold_init() {
   	define('FOLD_ACCT', get_option('fold_acct'));
   	define('FOLD_EXPY', get_option('fold_expy'));
 	}
 add_action('init','fold_init');
-
 function folding() {
 get_folding_stats();
 }
 function widget_folding() {
 $title = get_option('widget_folding_title');
-?><li><h3 class="sbtitle"><?php echo $title; ?></h3><?php
+?><li><h2 class="sbtitle"><?php echo $title; ?></h2><?php
 folding();
 }
 	// Settings form
@@ -81,8 +51,7 @@ add_option('widget_folding_title',$options);
 }
                       // form posted?
 		if ( $_POST['folding-submit'] ) {
- 
-			// Remember to sanitize and format use input appropriately.
+ 			// Remember to sanitize and format use input appropriately.
 			$options = strip_tags(stripslashes($_POST['folding-title']));
 			update_option('widget_folding_title', $options);
 		}
@@ -151,22 +120,29 @@ function read_fold_site() {
 	$credit = substr($credit, strpos($credit, '=4>') + 4, 12);
 	$credit = substr($credit, 0, strpos($credit, '<'));
 	$ov_rank = substr($ov_rank, strpos($ov_rank, '=4>') + 4, 20);
-	$ov_rank = substr($ov_rank, 0, strpos($ov_rank, '<'));
+	if (get_option('fold_rank') == 'short') {
+		$ov_rank = substr($ov_rank, 0, strpos($ov_rank, 'o')); 
+		} else {
+				$ov_rank = substr($ov_rank, 0, strpos($ov_rank, '<'));
+		}
 	$wu = substr($wu, strpos($wu, '<b>') + 4, 4);
 	$wu = substr($wu, 0, strpos($wu, '<'));
 	$expire = mktime(date("H")+FOLD_EXPY, 0, 0, date("m"), date("d"), date("y"));
 	//Write to Cache
 	$fh = fopen(FOLD_FILE, 'w') or die("can't open file");
 	if ($updating = strstr($sFile, 'Stats update in progress')) { 
-	$stringData = $expire.' Update in progress...';
+	$stringData = $expire.'Update in progress...<br />';
 	fwrite($fh, $stringData);
 	fclose($fh);
 	} else {
 	$stringData = $expire;
-	$stringData .= '<ul><li> Total Score: '.$credit.'</li>';
-	$stringData .= '<li> Overall Rank: '.$ov_rank.'</li>';
-	$stringData .= '<li> WorkUnits: '.$wu.'</li>';
-	$stringData .= '<li> Last Update: '.$last_upd.'</li></ul>';
+	$bold = get_option('fold_results_bold');
+	$color = get_option('fold_results_color');
+	$style = '<font style="font-weight: '.$bold.'; color: #'.$color.';">';
+	$stringData .= '<ul><li> Total Score: '.$style.$credit.'</font></li>';
+	$stringData .= '<li> Overall Rank: '.$style.$ov_rank.'</font></li>';
+	$stringData .= '<li> WorkUnits: '.$style.$wu.'</font></li>';
+	$stringData .= '<li> Last Update: '.$style.$last_upd.'</font></li></ul>';
 	fwrite($fh, $stringData);
 	fclose($fh);
 	}
