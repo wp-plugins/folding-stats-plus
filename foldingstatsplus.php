@@ -69,6 +69,7 @@ function folding_init() {
 }
 add_action("plugins_loaded", "folding_init");
 function get_folding_stats() {
+	if (get_option('fold_acct') != 'fold-id') {
 	//Date Compare
 	$today = mktime(date("H"), 0, 0, date("m"), date("d"), date("y"));
 	$expiry = get_option('folding_expire');
@@ -82,15 +83,25 @@ if (!$expiry) {
 	//Read Data From Cache
 	$fold_logo = get_settings('home') . '/wp-content/plugins/folding-stats-plus/FAHlogoML.jpg';
 	//Output
-	$preout = '<div align="'.get_option('fold_align').'">';
-	$out = $preout . get_option('folding_cache');
+	$out = '<div align="'.get_option('fold_align').'"><p>';
+	$out = $out .'Total Score: <font style="font-weight: '.get_option('fold_results_bold').'; color: #'.get_option('fold_results_color').';">'.get_option('folding_credit').'</font><br />';
+	$out = $out .'OverallRank: <font style="font-weight: '.get_option('fold_results_bold').'; color: #'.get_option('fold_results_color').';">'.get_option('folding_rank').'</font><br />';
+	$out = $out .'WorkUnits  : <font style="font-weight: '.get_option('fold_results_bold').'; color: #'.get_option('fold_results_color').';">'.get_option('folding_wu').'</font><br />';
+	if (get_option('folding_wut')) {
+	$out = $out .'UnitsTeam  : <font style="font-weight: '.get_option('fold_results_bold').'; color: #'.get_option('fold_results_color').';">'.get_option('folding_wut').'</font><br />';
+	}
+	$out = $out .'LastUpdate : <font style="font-weight: '.get_option('fold_results_bold').'; color: #'.get_option('fold_results_color').';">'.get_option('folding_last').'</font></p>';
 	if (get_option('fold_pic') == 'true') {
 	$out = $out . '<a href="http://folding.stanford.edu"><img src="'.$fold_logo.'" alt="Folding@Home" /></a>';
 	}
 	$out = $out . '</div></li>';
 	echo $out;
-}
+	} else {
+		echo 'Check settings!';
+	}
+	}
 function read_fold_site() {
+if (get_option('fold_acct') != 'fold-id') {
 	$host = 'fah-web.stanford.edu';
 	$path = '/cgi-bin/main.py?qtype=userpage&username=' . FOLD_ACCT;
 	$stats_url = 'http://fah-web.stanford.edu/cgi-bin/main.py?qtype=userpage&username=' . FOLD_ACCT;
@@ -125,17 +136,14 @@ function read_fold_site() {
 		update_option('folding_expire',$expire);
 	} else {
 		update_option('folding_expire',$expire);
-	$bold = get_option('fold_results_bold');
-	$color = get_option('fold_results_color');
-	$style = '<font style="font-weight: '.$bold.'; color: #'.$color.';">';
-	$stringData .= '<p>Total Score: '.$style.$credit.'</font><br />';
-	$stringData .= 'OverallRank: '.$style.$ov_rank.'</font><br />';
-	$stringData .= 'WorkUnits  : '.$style.$wu.'</font><br />';
-	$stringData .= 'TeamUnits  : '.$style.$wu2.'</font><br />';	
-	$stringData .= 'Last Update: '.$style.$last_upd.'</font></p>';
-	update_option('folding_cache',$stringData);
+	update_option('folding_credit',$credit);
+	update_option('folding_rank',$ov_rank);
+	update_option('folding_wu',$wu);
+	update_option('folding_wut',$wu2);
+	update_option('folding_last',$last_upd);
 	}
 }
+} 
 /** filters**/
 add_action('admin_head', 'fold_add_options_page');
 function fold_add_options_page() {
