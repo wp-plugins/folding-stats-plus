@@ -12,7 +12,7 @@ add_option('folding_align', 'left');
 add_option('folding_pic', 'true');
 add_option('folding_results_bold', 'true');
 add_option('folding_results_color', '000000');
-add_option('folding_rank', 'short');
+add_option('folding_rank_show', 'short');
 $location = get_option('foldurl') . '/wp-admin/admin.php?page=folding-stats-plus/options-folding.php'; // Form Action URI
 $script_directory = substr(__FILE__, 0, strrpos(__FILE__, '/'));
 $foldfile = $script_directory . '/folding_cache.txt';
@@ -38,11 +38,11 @@ if ($_POST['fold_acct'] == '') {
 			update_option('folding_results_bold', 'normal');
 		}
 			if (isset($_POST['fold_rank'])) {
-			update_option('folding_rank', 'full');
+			update_option('folding_rank_show', 'full');
 			update_option('folding_expire',0);
 			read_fold_site();
 		} else {
-			update_option('folding_rank', 'short');
+			update_option('folding_rank_show', 'short');
 			update_option('folding_expire',0);
 			read_fold_site();
 		}	
@@ -58,7 +58,7 @@ $fold_align = get_option('folding_align');
 $fold_pic = get_option('folding_pic');
 $fold_results_bold = get_option('folding_results_bold');
 $fold_results_color = get_option('folding_results_color');
-$fold_rank = get_option('folding_rank');
+$fold_rank = get_option('folding_rank_show');
 ?>
 <form name="fold"></form>
 <div class="wrap">
@@ -81,7 +81,7 @@ $fold_rank = get_option('folding_rank');
 					<p><label for="fold_results_color">Results Color:</label>
 					<input id="fold_results_color" name="fold_results_color" type="text" value="<?php print get_option('folding_results_color');?>" style="width: 60px;" /> Eg: <font style="color: #ff0000;">ff0000</font><font style="color: #00ff00;"> 00ff00 </font><font style="color: #c0c0c0;">c0c0c0</font></p>
 					<p><label for="fold_rank">Show full rank:</label>
-					<input id="fold_rank" name="fold_rank" type="checkbox" value="<?php print get_option('folding_rank');?>" <?php if(get_option('folding_rank') == 'full') {?> checked="checked" <?php } ?>/></p></div>	
+					<input id="fold_rank" name="fold_rank" type="checkbox" value="<?php print get_option('folding_rank_show');?>" <?php if(get_option('folding_rank_show') == 'full') {?> checked="checked" <?php } ?>/></p></div>	
 		<br />
 					
 			    </fieldset>

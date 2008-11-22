@@ -3,7 +3,7 @@
 Plugin Name: Folding Stats Plus
 Plugin URI: http://www.pross.org.uk/category/plugins/
 Description: Display current Folding@Home stats
-Version: 0.9
+Version: 0.9.1
 Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
@@ -121,7 +121,7 @@ if (get_option('folding_acct') != 'fold-id') {
 	$credit = substr($credit, strpos($credit, '=4>') + 4, 12);
 	$credit = substr($credit, 0, strpos($credit, '<'));
 	$ov_rank = substr($ov_rank, strpos($ov_rank, '=4>') + 4, 20);
-	if (get_option('folding_rank') == 'short') {
+	if (get_option('folding_rank_show') == 'short') {
 		$ov_rank = substr($ov_rank, 0, strpos($ov_rank, 'o')); 
 		} else {
 				$ov_rank = substr($ov_rank, 0, strpos($ov_rank, '<'));
