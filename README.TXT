@@ -13,8 +13,11 @@ This plugin is intended to show the current Folding@Home statistics for a given 
 
 == Installation ==
 * upload the contents of the zip file to your `wp-content/plugins` directory
+
 * go to the Plugins main menu and find `Folding@Home Stats`, then click Activate
-* go to the Options / Folding Options menu and enter your account id, and the number of hours to wait to refresh the cache
+
+* go to the Options / Folding Options menu and enter your account id, and the number of hours to wait to refresh the cache.
+
 You are good to go.
 
 == Usage ==
@@ -33,8 +36,13 @@ Use the included widget in your sidebar.
 == Change Log ==
 
 0.9 No more flat file, everything is stored in the database.
+
 0.7 Bugfix
+
 0.6 Added style options 
+
 0.5 Fixed HTML to validate W3C
+
 0.2 Added widget title options, cleaned up code
+
 0.1 First release
