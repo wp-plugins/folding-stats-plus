@@ -27,8 +27,8 @@ Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 function fold_init() {
-  	define('FOLD_ACCT', get_option('fold_acct'));
-  	define('FOLD_EXPY', get_option('fold_expy'));
+  	define('FOLD_ACCT', get_option('folding_acct'));
+  	define('FOLD_EXPY', get_option('folding_expy'));
 	}
 add_action('init','fold_init');
 function folding() {
@@ -69,7 +69,7 @@ function folding_init() {
 }
 add_action("plugins_loaded", "folding_init");
 function get_folding_stats() {
-	if (get_option('fold_acct') != 'fold-id') {
+	if (get_option('folding_acct') != 'fold-id') {
 	//Date Compare
 	$today = mktime(date("H"), 0, 0, date("m"), date("d"), date("y"));
 	$expiry = get_option('folding_expire');
@@ -83,25 +83,26 @@ if (!$expiry) {
 	//Read Data From Cache
 	$fold_logo = get_settings('home') . '/wp-content/plugins/folding-stats-plus/FAHlogoML.jpg';
 	//Output
-	$out = '<div align="'.get_option('fold_align').'"><p>';
-	$out = $out .'Total Score: <font style="font-weight: '.get_option('fold_results_bold').'; color: #'.get_option('fold_results_color').';">'.get_option('folding_credit').'</font><br />';
-	$out = $out .'OverallRank: <font style="font-weight: '.get_option('fold_results_bold').'; color: #'.get_option('fold_results_color').';">'.get_option('folding_rank').'</font><br />';
-	$out = $out .'WorkUnits  : <font style="font-weight: '.get_option('fold_results_bold').'; color: #'.get_option('fold_results_color').';">'.get_option('folding_wu').'</font><br />';
+	$out = '<div align="'.get_option('folding_align').'"><p>';
+	$out = $out .'Total Score: <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_credit').'</font><br />';
+	$out = $out .'OverallRank: <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_rank').'</font><br />';
+	$out = $out .'WorkUnits  : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_wu').'</font><br />';
 	if (get_option('folding_wut')) {
-	$out = $out .'UnitsTeam  : <font style="font-weight: '.get_option('fold_results_bold').'; color: #'.get_option('fold_results_color').';">'.get_option('folding_wut').'</font><br />';
+	$out = $out .'OtherUnits : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_wut').'</font><br />';
 	}
-	$out = $out .'LastUpdate : <font style="font-weight: '.get_option('fold_results_bold').'; color: #'.get_option('fold_results_color').';">'.get_option('folding_last').'</font></p>';
-	if (get_option('fold_pic') == 'true') {
-	$out = $out . '<a href="http://folding.stanford.edu"><img src="'.$fold_logo.'" alt="Folding@Home" /></a>';
+	$out = $out .'LastUpdate : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_last').'</font></p>';
+	if (get_option('folding_pic') == 'true') {
+	$out = $out . '<a border="0" href="http://folding.stanford.edu"><img border="0" src="'.$fold_logo.'" alt="Folding@Home" /></a>';
 	}
 	$out = $out . '</div></li>';
 	echo $out;
+	echo '<!-- Folding-stats-plus http://www.pross.org.uk/wordpress-plugins/ -->';
 	} else {
 		echo 'Check settings!';
 	}
 	}
 function read_fold_site() {
-if (get_option('fold_acct') != 'fold-id') {
+if (get_option('folding_acct') != 'fold-id') {
 	$host = 'fah-web.stanford.edu';
 	$path = '/cgi-bin/main.py?qtype=userpage&username=' . FOLD_ACCT;
 	$stats_url = 'http://fah-web.stanford.edu/cgi-bin/main.py?qtype=userpage&username=' . FOLD_ACCT;
@@ -120,7 +121,7 @@ if (get_option('fold_acct') != 'fold-id') {
 	$credit = substr($credit, strpos($credit, '=4>') + 4, 12);
 	$credit = substr($credit, 0, strpos($credit, '<'));
 	$ov_rank = substr($ov_rank, strpos($ov_rank, '=4>') + 4, 20);
-	if (get_option('fold_rank') == 'short') {
+	if (get_option('folding_rank') == 'short') {
 		$ov_rank = substr($ov_rank, 0, strpos($ov_rank, 'o')); 
 		} else {
 				$ov_rank = substr($ov_rank, 0, strpos($ov_rank, '<'));
