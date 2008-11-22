@@ -27,8 +27,8 @@ Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 function fold_init() {
-  	define('FOLD_ACCT', get_option('fold_acct'));
-  	define('FOLD_EXPY', get_option('fold_expy'));
+  	define('FOLD_ACCT', get_option('folding_acct'));
+  	define('FOLD_EXPY', get_option('folding_expy'));
 	}
 add_action('init','fold_init');
 function folding() {
@@ -36,13 +36,12 @@ get_folding_stats();
 }
 function widget_folding() {
 $title = get_option('widget_folding_title');
-?><li><h2 class="sbtitle"><?php echo $title; ?></h2><?php
+?><li id="folding"><h3 class="widgettitle"><?php echo $title; ?></h3><?php
 folding();
 }
 	// Settings form
 	function widget_folding_control() {
- 
-		// Get options
+ 		// Get options
 		$options = get_option('widget_folding_title');
 		// options exist? if not set defaults
 		if ( !$options ) {
@@ -66,41 +65,44 @@ add_option('widget_folding_title',$options);
 		}
 function folding_init() {
   register_sidebar_widget(__('Foldingstats'), 'widget_folding');
-	register_widget_control(array('Foldingstats','widgets'), 'widget_folding_control');
+  register_widget_control(array('Foldingstats','widgets'), 'widget_folding_control');
 }
 add_action("plugins_loaded", "folding_init");
-define('FOLD_FILE', ABSPATH . 'wp-content/plugins/folding-stats-plus/folding_cache.txt');
 function get_folding_stats() {
-	//Get the Write Time
-if (file_exists(FOLD_FILE)) {
-	$fh = fopen(FOLD_FILE, 'r');
-	$expiry = fread($fh, 10);
-	fclose($fh);
-}
+	if (get_option('folding_acct') != 'fold-id') {
 	//Date Compare
 	$today = mktime(date("H"), 0, 0, date("m"), date("d"), date("y"));
-
-	if ($expiry < $today) {
-		//Get Fresh Data
-		read_fold_site();
-	}
+	$expiry = get_option('folding_expire');
+if (!$expiry) { 
+	$expiry = 0;
+			}
+		if ($expiry < $today) {
+			//Get Fresh Data
+			read_fold_site();
+			}
 	//Read Data From Cache
-if (file_exists(FOLD_FILE)) {
-	$fg = fopen(FOLD_FILE, 'r');
-	$out = fread($fg, filesize(FOLD_FILE));
-	fclose($fg);
-}
 	$fold_logo = get_settings('home') . '/wp-content/plugins/folding-stats-plus/FAHlogoML.jpg';
 	//Output
-	$preout = '<div align="'.get_option('fold_align').'">';
-	$out = $preout . substr($out, 10, strlen($out));
-	if (get_option('fold_pic') == 'true') {
-	$out = $out . '<a href="http://folding.stanford.edu"><img src="'.$fold_logo.'" alt="Folding@Home" /></a>';
+	$out = '<div align="'.get_option('folding_align').'"><p>';
+	$out = $out .'Total Score: <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_credit').'</font><br />';
+	$out = $out .'OverallRank: <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_rank').'</font><br />';
+	$out = $out .'WorkUnits  : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_wu').'</font><br />';
+	if (get_option('folding_wut')) {
+	$out = $out .'OtherUnits : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_wut').'</font><br />';
+	}
+	$out = $out .'LastUpdate : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_last').'</font></p>';
+	if (get_option('folding_pic') == 'true') {
+	$out = $out . '<a border="0" href="http://folding.stanford.edu"><img border="0" src="'.$fold_logo.'" alt="Folding@Home" /></a>';
 	}
 	$out = $out . '</div></li>';
 	echo $out;
-}
+	echo '<!-- Folding-stats-plus http://www.pross.org.uk/wordpress-plugins/ -->';
+	} else {
+		echo 'Check settings!';
+	}
+	}
 function read_fold_site() {
+if (get_option('folding_acct') != 'fold-id') {
 	$host = 'fah-web.stanford.edu';
 	$path = '/cgi-bin/main.py?qtype=userpage&username=' . FOLD_ACCT;
 	$stats_url = 'http://fah-web.stanford.edu/cgi-bin/main.py?qtype=userpage&username=' . FOLD_ACCT;
@@ -108,56 +110,46 @@ function read_fold_site() {
 	//Get the site data and trim to something managable
 	$sFile = get_contents($stats_url, False);
 	$sfile = substr($sfile, 0, 2000);
-	if ($updating = strstr($sFile, 'Stats update in progress')) { 
-	$updating = 'Stats update in progress';
-	}
 	$last_upd = strstr($sFile, 'Date of last work unit');
 	$credit = strstr($sFile, 'Total score');
 	$ov_rank = strstr($sFile, 'Overall rank');
 	$wu = strstr($sFile, '<TD> WU</TD>');
+	$wu2 = strstr($wu, '<TD align=left><b>Active');
+	$wu2 = strstr($wu2, '<TD> WU</TD>');
 	//Parse Strings
 	$last_upd = substr($last_upd, strpos($last_upd, '=4>') + 4, 11);
 	$credit = substr($credit, strpos($credit, '=4>') + 4, 12);
 	$credit = substr($credit, 0, strpos($credit, '<'));
 	$ov_rank = substr($ov_rank, strpos($ov_rank, '=4>') + 4, 20);
-	if (get_option('fold_rank') == 'short') {
+	if (get_option('folding_rank') == 'short') {
 		$ov_rank = substr($ov_rank, 0, strpos($ov_rank, 'o')); 
 		} else {
 				$ov_rank = substr($ov_rank, 0, strpos($ov_rank, '<'));
 		}
 	$wu = substr($wu, strpos($wu, '<b>') + 4, 4);
 	$wu = substr($wu, 0, strpos($wu, '<'));
+	$wu2 = substr($wu2, strpos($wu2, '<b>') + 4, 4);
+	$wu2 = substr($wu2, 0, strpos($wu2, '<'));
 	$expire = mktime(date("H")+FOLD_EXPY, 0, 0, date("m"), date("d"), date("y"));
 	//Write to Cache
-	$fh = fopen(FOLD_FILE, 'w') or die("can't open file");
 	if ($updating = strstr($sFile, 'Stats update in progress')) { 
-	$stringData = $expire.'Update in progress...<br />';
-	fwrite($fh, $stringData);
-	fclose($fh);
+		$expire = mktime(date("H")+1, 0, 0, date("m"), date("d"), date("y"));;
+		update_option('folding_expire',$expire);
 	} else {
-	$stringData = $expire;
-	$bold = get_option('fold_results_bold');
-	$color = get_option('fold_results_color');
-	$style = '<font style="font-weight: '.$bold.'; color: #'.$color.';">';
-	$stringData .= '<ul><li> Total Score: '.$style.$credit.'</font></li>';
-	$stringData .= '<li> Overall Rank: '.$style.$ov_rank.'</font></li>';
-	$stringData .= '<li> WorkUnits: '.$style.$wu.'</font></li>';
-	$stringData .= '<li> Last Update: '.$style.$last_upd.'</font></li></ul>';
-	fwrite($fh, $stringData);
-	fclose($fh);
+		update_option('folding_expire',$expire);
+	update_option('folding_credit',$credit);
+	update_option('folding_rank',$ov_rank);
+	update_option('folding_wu',$wu);
+	update_option('folding_wut',$wu2);
+	update_option('folding_last',$last_upd);
 	}
 }
+} 
 /** filters**/
 add_action('admin_head', 'fold_add_options_page');
 function fold_add_options_page() {
 	add_options_page('Folding Options', 'Folding Options', 'manage_options', 'folding-stats-plus/options-folding.php');
-	$expire = mktime(date("H")-FOLD_EXPY, 0, 0, date("m"), date("d"), date("y"));
-	//Create the Cache
-	$fh = fopen(FOLD_FILE, 'w') or die("can't open file");
-	$stringData = $expire;
-	fwrite($fh, $stringData);
-	fclose($fh);
-}
+	}
 function get_contents($url) {
 	if(ini_get('allow_url_fopen'))
 		{
