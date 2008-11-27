@@ -12,7 +12,7 @@ add_option('folding_align', 'left');
 add_option('folding_pic', 'true');
 add_option('folding_results_bold', 'true');
 add_option('folding_results_color', '000000');
-add_option('folding_rank', 'short');
+add_option('folding_rank_show', 'short');
 $location = get_option('foldurl') . '/wp-admin/admin.php?page=folding-stats-plus/options-folding.php'; // Form Action URI
 $script_directory = substr(__FILE__, 0, strrpos(__FILE__, '/'));
 $foldfile = $script_directory . '/folding_cache.txt';
@@ -38,11 +38,11 @@ if ($_POST['fold_acct'] == '') {
 			update_option('folding_results_bold', 'normal');
 		}
 			if (isset($_POST['fold_rank'])) {
-			update_option('folding_rank', 'full');
+			update_option('folding_rank_show', 'full');
 			update_option('folding_expire',0);
 			read_fold_site();
 		} else {
-			update_option('folding_rank', 'short');
+			update_option('folding_rank_show', 'short');
 			update_option('folding_expire',0);
 			read_fold_site();
 		}	
@@ -58,17 +58,20 @@ $fold_align = get_option('folding_align');
 $fold_pic = get_option('folding_pic');
 $fold_results_bold = get_option('folding_results_bold');
 $fold_results_color = get_option('folding_results_color');
-$fold_rank = get_option('folding_rank');
+$fold_rank = get_option('folding_rank_show');
 ?>
 <form name="fold"></form>
 <div class="wrap">
   <h2><?php _e('Folding Options') ?></h2>
+<br class="clear" />
   <form id="fold_form" name="form1" method="post" action="<?php echo $location ?>&amp;updated=true">
   	<input type="hidden" name="stage" value="process" />
   	<fieldset class="options">
+		<div id="poststuff" class="ui-sortable">
+		<div id="folding-stats_settings" class="postbox " >	
   		<h3><?php _e('Personal Settings') ?></h3>
-  		<div style="width:350px;text-align:left;padding:10px;background-color:#F5F5F5;border: 1px solid black;font-size:10px;">
-		<p><label  for="fold_acct">Account ID:</label><input style="width: 125px;" id="fold_acct" name="fold_acct" type="text" value="<?php echo $fold_acct;?>" /><? if ($fold_acct == 'fold-id') { echo '<font style="color: #ff0000;">Set your FAH name!</font>'; } ?></p>
+<div class="inside">
+  		<p><label  for="fold_acct">Account ID:</label><input style="width: 125px;" id="fold_acct" name="fold_acct" type="text" value="<?php echo $fold_acct;?>" /><? if ($fold_acct == 'fold-id') { echo '<font style="color: #ff0000;">Set your FAH name!</font>'; } ?></p>
 			<p><label for="fold_expy">Refresh (in Hours):</label>
 			<input style="width: 50px;" id="fold_expy" name="fold_expy" type="text" value="<?php echo $fold_expy;?>" /><br />			
 					<label for="fold_acct">Stats Alignment:</label>
@@ -81,31 +84,33 @@ $fold_rank = get_option('folding_rank');
 					<p><label for="fold_results_color">Results Color:</label>
 					<input id="fold_results_color" name="fold_results_color" type="text" value="<?php print get_option('folding_results_color');?>" style="width: 60px;" /> Eg: <font style="color: #ff0000;">ff0000</font><font style="color: #00ff00;"> 00ff00 </font><font style="color: #c0c0c0;">c0c0c0</font></p>
 					<p><label for="fold_rank">Show full rank:</label>
-					<input id="fold_rank" name="fold_rank" type="checkbox" value="<?php print get_option('folding_rank');?>" <?php if(get_option('folding_rank') == 'full') {?> checked="checked" <?php } ?>/></p></div>	
-		<br />
-					
+					<input id="fold_rank" name="fold_rank" type="checkbox" value="<?php print get_option('folding_rank_show');?>" <?php if(get_option('folding_rank_show') == 'full') {?> checked="checked" <?php } ?>/></p>
 			    </fieldset>
-<?php if ($fold_acct != 'fold-id'){
-echo '<h2>Preview:</h2>';
-echo '<div style="width:350px;padding:10px;background-color:#F5F5F5;border: 1px solid black;font-size:10px;">';
-echo '<div align="center" style="width:200px;text-align:'.get_option('folding_align').';padding:10px;background-color:#ffffff;border: 1px solid black;font-size:10px;">';
-echo '<p>';
-echo 'Total Score: <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_credit').'</font><br />';
-echo 'OverallRank: <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_rank').'</font><br />';
-echo 'WorkUnits  : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_wu').'</font><br />';
-if (get_option('folding_wut')) {
-echo 'OtherUnits : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_wut').'</font><br />';
-}
-echo 'LastUpdate : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_last').'</font>';
-if (get_option('folding_pic') == 'true') {
-	echo '<a href="http://folding.stanford.edu"><img src="'.get_settings('home') . '/wp-content/plugins/folding-stats-plus/FAHlogoML.jpg'.'" alt="Folding@Home" /></a>';
-	}
-echo '</p></div></div>';
-}
-?>
- <p class="submit"><label for="fold_del">Reset cache?:</label>
-					<input id="fold_del" name="fold_del" type="checkbox" value="delete"  />
-      <input type="submit" name="Submit" value="<?php _e('Update options') ?> &raquo;" /> 
-    </p>
-  </form>
+				<?php if ($fold_acct != 'fold-id'){
+				echo '<h2>Preview</h2>';
+				echo '<p>';
+				echo 'Total Score: <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_credit').'</font><br />';
+				echo 'OverallRank: <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_rank').'</font><br />';
+				echo 'WorkUnits  : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_wu').'</font><br />';
+				if (get_option('folding_wut')) {
+				echo 'OtherUnits : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_wut').'</font><br />';
+				}
+				echo 'LastUpdate : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_last').'</font>';
+				if (get_option('folding_pic') == 'true') {
+					echo '<br /><a href="http://folding.stanford.edu"><img src="'.get_settings('home') . '/wp-content/plugins/folding-stats-plus/FAHlogoML.jpg'.'" alt="Folding@Home" /></a>';
+					}
+				echo '</p>';
+				}
+
+				?>
+			
+			
+			
+			 <p class="submit">
+			      <input type="submit" name="Submit" value="<?php _e('Update options') ?> &raquo;" /> <input id="fold_del" name="fold_del" type="checkbox" value="delete" /><label for="fold_del"> Reset cache?</label>
+			    </p>
+			  </form>
+</div></div></div>
+
+
 </div>

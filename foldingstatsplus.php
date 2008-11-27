@@ -2,13 +2,13 @@
 /*
 Plugin Name: Folding Stats Plus
 Plugin URI: http://www.pross.org.uk/category/plugins/
-Description: Display current Folding@Home stats
-Version: 1.0
+Description: This plugin is intended to show the current Folding@Home statistics for a given account. <a href="options-general.php?page=folding-stats-plus/options-folding.php">Settings</a> page.
+Version: 0.9.1
 Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 */
-/*	Code is forked with permission from Jason F. Irwin J²fi's version http://www.j2fi.net/2007/03/23/foldinghome-wordpress-plugin/
+/*	Code is forked with permission from Jason F. Irwin Jï¿½fi's version http://www.j2fi.net/2007/03/23/foldinghome-wordpress-plugin/
 	
 	Copyright 2007  Simon Prosser  (email: pross@pross.org.uk)
 	
@@ -34,10 +34,13 @@ add_action('init','fold_init');
 function folding() {
 get_folding_stats();
 }
-function widget_folding() {
+function widget_folding($args) {
+	extract($args);
 $title = get_option('widget_folding_title');
-?><li id="folding"><h3 class="widgettitle"><?php echo $title; ?></h3><?php
+echo $before_widget;
+echo $before_title . $title . $after_title;
 folding();
+	echo $after_widget;
 }
 	// Settings form
 	function widget_folding_control() {
@@ -90,13 +93,16 @@ if (!$expiry) {
 	if (get_option('folding_wut')) {
 	$out = $out .'OtherUnits : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_wut').'</font><br />';
 	}
-	$out = $out .'LastUpdate : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_last').'</font></p>';
+	$out = $out .'LastUpdate : <font style="font-weight: '.get_option('folding_results_bold').'; color: #'.get_option('folding_results_color').';">'.get_option('folding_last').'</font>';
 	if (get_option('folding_pic') == 'true') {
-	$out = $out . '<a border="0" href="http://folding.stanford.edu"><img border="0" src="'.$fold_logo.'" alt="Folding@Home" /></a>';
+	$out = $out . '<br /><a href="http://folding.stanford.edu"><img style="border:none;" src="'.$fold_logo.'" alt="Folding@Home" /></a>';
 	}
-	$out = $out . '</div></li>';
+	$out = $out . '</p></div>';
 	echo $out;
-	echo '<!-- Folding-stats-plus http://www.pross.org.uk/wordpress-plugins/ -->';
+	echo '
+<!-- This is a HTML comment it will not appear in your post page!
+Folding-stats-plus http://www.pross.org.uk/wordpress-plugins/ 
+Feel free to leave a comment suggestion -->';
 	} else {
 		echo 'Check settings!';
 	}
@@ -121,7 +127,7 @@ if (get_option('folding_acct') != 'fold-id') {
 	$credit = substr($credit, strpos($credit, '=4>') + 4, 12);
 	$credit = substr($credit, 0, strpos($credit, '<'));
 	$ov_rank = substr($ov_rank, strpos($ov_rank, '=4>') + 4, 20);
-	if (get_option('folding_rank') == 'short') {
+	if (get_option('folding_rank_show') == 'short') {
 		$ov_rank = substr($ov_rank, 0, strpos($ov_rank, 'o')); 
 		} else {
 				$ov_rank = substr($ov_rank, 0, strpos($ov_rank, '<'));
