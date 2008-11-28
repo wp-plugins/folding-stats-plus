@@ -3,7 +3,7 @@
 Plugin Name: Folding Stats Plus
 Plugin URI: http://www.pross.org.uk/category/plugins/
 Description: This plugin is intended to show the current Folding@Home statistics for a given account. <a href="options-general.php?page=folding-stats-plus/options-folding.php">Settings</a> page.
-Version: 0.9.1
+Version: 0.9.3
 Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
