@@ -6,7 +6,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=pross
 Requires at Least:  WordPress 2.0.x (all versions) / PHP 4.0 >= 4.3 or 5.0+
 Tested Up To:  WordPress 2.7
 Tags:  Folding@Home, Folding, stats, sidebar, widget
-Stable tag: 0.9.1
+Stable tag: 1.0-dev
 
 == Description ==
 This plugin is intended to show the current Folding@Home statistics for a given account.
@@ -33,7 +33,9 @@ Use the included widget in your sidebar.
 * go to the Plugins main menu and find Folding@Home Stats Plus, then click Deactivate 
 * delete the files from your `wp-content/plugins` directory 
 
-== Change Log ==
+== Change Log ==
+
+1.0 this is the dev version
 
 0.9 No more flat file, everything is stored in the database.
 
