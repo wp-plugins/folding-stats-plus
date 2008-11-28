@@ -8,7 +8,7 @@ Plugin URI: http://www.pross.org.uk/category/plugins/
 
 Description: This plugin is intended to show the current Folding@Home statistics for a given account. <a href="options-general.php?page=folding-stats-plus/options-folding.php">Settings</a> page.
 
-Version: 1.0-dev
+Version: 1.0
 
 Author: Simon Prosser
 
@@ -75,7 +75,6 @@ font-weight: '.get_option('folding_results_bold').';
 }
 </style>';
 }
-add_action('wp_head', 'folding_css', 1);
 function folding() {
 get_folding_stats();
 }
@@ -149,7 +148,7 @@ function folding_init() {
   register_sidebar_widget(__('Foldingstats'), 'widget_folding');
 
   register_widget_control(array('Foldingstats','widgets'), 'widget_folding_control');
-
+add_action('wp_head', 'folding_css', 1);
 }
 
 add_action("plugins_loaded", "folding_init");
@@ -361,4 +360,3 @@ function get_contents($url) {
 		}
 
 ?>
-

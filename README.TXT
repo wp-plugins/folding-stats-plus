@@ -6,7 +6,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=pross
 Requires at Least:  WordPress 2.0.x (all versions) / PHP 4.0 >= 4.3 or 5.0+
 Tested Up To:  WordPress 2.7
 Tags:  Folding@Home, Folding, stats, sidebar, widget
-Stable tag: 1.0-dev
+
 
 == Description ==
 This plugin is intended to show the current Folding@Home statistics for a given account.
