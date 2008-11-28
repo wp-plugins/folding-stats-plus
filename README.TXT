@@ -5,7 +5,8 @@ Plugin URL:  http://www.pross.org.uk/2008/09/22/foldingstats/
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=pross2%40gmail%2ecom&item_name=Simon%20Prosser&page_style=PayPal&no_shipping=0&return=http%3a%2f%2fwww%2epross%2eorg%2euk&no_note=1&tax=0&currency_code=GBP&lc=GB&bn=PP%2dDonationsBF&charset=UTF%2d8
 Requires at Least:  WordPress 2.0.x (all versions) / PHP 4.0 >= 4.3 or 5.0+
 Tested Up To:  WordPress 2.7
-Tags:  Folding@Home, Folding, stats, sidebar, widget
+Tags:  Folding@Home, Folding, stats, sidebar, widget
+Stable tag: 0.9.3
 == Description ==
 This plugin is intended to show the current Folding@Home statistics for a given account.
 
