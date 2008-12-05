@@ -25,6 +25,7 @@ Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 function fold_init() {
 	define('FOLD_ACCT', get_option('folding_acct'));
   	define('FOLD_EXPY', get_option('folding_expy'));
+	define('FOLD_TEAM', get_option('folding_team'));
 	}
 add_action('init','fold_init');
 function folding_css($unused) {
@@ -198,7 +199,7 @@ if (get_option('folding_team') == '0') {
 function read_fold_site() {
 if (get_option('folding_acct') != 'fold-id') {
 if (get_option('folding_team') != '0') {
-	$stats_url = 'http://folding.extremeoverclocking.com/xml/user_summary.php?un=Simon_P&t=35216';
+	$stats_url = 'http://folding.extremeoverclocking.com/xml/user_summary.php?un=' . FOLD_ACCT . '&t='. FOLD_TEAM;
 	//Get the site data and trim to something managable
 	$sFile = file_get_contents($stats_url, False);
 	$sfile = substr($sfile, 0, 4000);
@@ -220,8 +221,6 @@ if (get_option('folding_team') != '0') {
 	update_option('rank_change_user',$rank_change_user);
 	update_option('rank_change_team',$rank_change_team);
 } else {
-	$host = 'fah-web.stanford.edu';
-	$path = '/cgi-bin/main.py?qtype=userpage&username=' . FOLD_ACCT;
 	$stats_url = 'http://fah-web.stanford.edu/cgi-bin/main.py?qtype=userpage&username=' . FOLD_ACCT;
 	$fold_url = 'http://folding.stanford.edu/';
 	//Get the site data and trim to something managable
