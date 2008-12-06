@@ -267,6 +267,63 @@ add_action('admin_head', 'fold_add_options_page');
 function fold_add_options_page() {
 	add_options_page('Folding Options', 'Folding Options', 'manage_options', 'folding-stats-plus/options-folding.php');
 	}
+
+
+add_action('wp_dashboard_setup', 'PLUGINNAME_register_dashboard_widget');
+function PLUGINNAME_register_dashboard_widget() {
+	wp_register_sidebar_widget('dashboard_PLUGINNAME', __('Sample Dashboard Widget', 'PLUGINNAME'), 'dashboard_PLUGINNAME',
+		array(
+		'all_link' => 'Full URL For "See All" link', // Example: 'index.php?page=wp-useronline/wp-useronline.php'
+		'feed_link' => 'Full URL For "RSS" link', // Example: 'index.php?page=wp-useronline/wp-useronline-rss.php'
+		'width' => 'half', // OR 'fourth', 'third', 'half', 'full' (Default: 'half')
+		'height' => 'single', // OR 'single', 'double' (Default: 'single')
+		)
+	);
+}
+ 
+### Function: Add Dashboard Widget
+/**
+ * Content of Dashboard-Widget
+ */
+function folding_stats_dashboard() {
+	$out = '<div style="width: 100px; height: 100px; border: 0px; float: left;>';
+	$out = $out .'<div><span class="foldtext">Total Score:</span><br />';
+	$out = $out .'<span class="foldtext">OverallRank:</span><br />';
+	$out = $out .'<span class="foldtext">Team Rank:</span><br />';
+	$out = $out .'<span class="foldtext">WorkUnits:</span><br />';
+	$out = $out .'<span class="foldtext">24hr Average:</span><br />';
+	$out = $out .'<span class="foldtext">Last 7 days:</span></div>';
+	$out = $out .'<div>';
+	$out = $out .'<span style="color: #'.get_option('folding_results_color').'; font-weight: '.get_option('folding_results_bold').';">'.get_option('folding_credit').'</span><br />';
+	$out = $out .'<span style="color: #'.get_option('folding_results_color').'; font-weight: '.get_option('folding_results_bold').';">'.get_option('folding_rank').'</span> ';
+	if (get_option('rank_change_user') >0 ) { $out = $out .'<span class="rank">(&uarr;'.get_option('rank_change_user').')</span>'; }
+	if (get_option('rank_change_user') <0 ) { $out = $out .'<span class="rank">(&darr;'.get_option('rank_change_user').')</span>'; }
+	$out = $out .'<br />';
+	$out = $out .'<span style="color: #'.get_option('folding_results_color').'; font-weight: '.get_option('folding_results_bold').';">'.get_option('folding_team_rank').'</span> ';
+	if (get_option('rank_change_team') >0 ) { $out = $out .'<span class="rank">(&uarr;'.get_option('rank_change_team').')</span>'; }
+	if (get_option('rank_change_team') <0 ) { $out = $out .'<span class="rank">(&darr;'.get_option('rank_change_team').')</span>'; }
+	$out = $out .'<br />';
+	$out = $out .'<span style="color: #'.get_option('folding_results_color').'; font-weight: '.get_option('folding_results_bold').';">'.get_option('folding_wu').'</span><br />';
+	$out = $out .'<span style="color: #'.get_option('folding_results_color').'; font-weight: '.get_option('folding_results_bold').';">'.get_option('folding_24avg').'</span><br />';
+	$out = $out .'<span style="color: #'.get_option('folding_results_color').'; font-weight: '.get_option('folding_results_bold').';">'.get_option('folding_7days').'</span></div></div>';
+	echo $out;
+}
+ 
+/**
+ * add Dashboard Widget via function wp_add_dashboard_widget()
+ */
+function folding_stats_dashboard_setup() {
+	wp_add_dashboard_widget( 'folding_stats_dashboard', __( 'Folding Stats Plus' ), 'folding_stats_dashboard' );
+}
+ 
+/**
+ * use hook, to integrate new widget
+ */
+add_action('wp_dashboard_setup', 'folding_stats_dashboard_setup');
+
+
+
+
 function get_contents($url) {
 	if(ini_get('allow_url_fopen'))
 		{
