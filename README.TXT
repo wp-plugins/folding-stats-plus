@@ -3,7 +3,7 @@ Contributors:  pross
 Author URI:  http://www.pross.org.uk
 Plugin URL:  http://www.pross.org.uk/2008/09/22/foldingstats/
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=pross2%40gmail%2ecom&item_name=Simon%20Prosser&page_style=PayPal&no_shipping=0&return=http%3a%2f%2fwww%2epross%2eorg%2euk&no_note=1&tax=0&currency_code=GBP&lc=GB&bn=PP%2dDonationsBF&charset=UTF%2d8
-Requires at Least:  WordPress 2.0.x (all versions) / PHP 4.0 >= 4.3 or 5.0+
+Requires at Least:  WordPress 2.5.x / PHP 5.0+
 Tested Up To:  WordPress 2.7
 Tags:  Folding@Home, Folding, stats, sidebar, widget
 
@@ -23,7 +23,8 @@ You are good to go.
 == Usage ==
 Use the included widget in your sidebar.
 
-== Frequently Asked Questions ==
+== Frequently Asked Questions ==
+None so far.
 
 == Screenshots ==
 1. The widget in the sidebar.
