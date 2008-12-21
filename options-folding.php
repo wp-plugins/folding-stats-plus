@@ -26,8 +26,12 @@ if ($_POST['fold_acct'] == '') {
 	} else { 
 	update_option('folding_acct', $_POST['fold_acct']);
 	}
-  update_option('folding_expy', $_POST['fold_expy']);
-//  update_option('folding_align', $_POST['fold_align']);
+ if ($_POST['fold_expy'] <4 ) { 
+	update_option('folding_expy', '4');
+	} else {
+ update_option('folding_expy', $_POST['fold_expy']);
+	}
+ //  update_option('folding_align', $_POST['fold_align']);
   update_option('folding_results_color', $_POST['fold_results_color']);
 		if (isset($_POST['fold_pic'])) {
 			update_option('folding_pic', 'true');

@@ -25,6 +25,7 @@ Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 function fold_init() {
 	define('FOLD_ACCT', get_option('folding_acct'));
   	define('FOLD_EXPY', get_option('folding_expy'));
+	define('FOLD_TEAM', get_option('folding_team'));
 		     }
 add_action('init','fold_init');
 
@@ -89,7 +90,8 @@ function get_folding_stats() {
 	//Output
 
 echo '
-<!-- Folding-stats-plus http://www.pross.org.uk/wordpress-plugins/ -->
+<!-- Folding-stats-plus http://www.pross.org.uk/wordpress-plugins/
+Advanced XML stats provided by http://folding.extremeoverclocking.com/ with permission -->
 ';
 	draw_stats();
 	echo '
@@ -166,20 +168,21 @@ if (get_option('folding_team') >0 ) {
 $foldxml = get_option('folding_xml');
 $xmlobj = simplexml_load_string($foldxml); 
 ?>
-<div style="position: relative; height: 150px; padding-bottom: 10px; padding-top: 10px;">
-<div style="position: absolute; width: 83px;">
-User Name<br />
-User Rank<br />
+<div style="position: relative;  height: 155px; line-height: 14px; padding-bottom: 2px; padding-top: 10px;">
+<div style="position: absolute; width: 50px;">
+Name<br />
+Rank<br />
 Points<br />
-Points/24h<br />
-Points/7D<br />
-Work Units<br />
-Team Name<br />
-Team Rank<br />
-Team Points<br />
-Team Users<br />
+Pts/24h<br />
+Pts/7D<br />
+WU's<br />
+<span style="text-decoration: underline;">Team</span><br />
+Name<br />
+Rank<br />
+Points<br />
+Users<br />
 </div>
-<div style="position: absolute; left: 83px;">
+<div style="position: absolute; left: 50px;">
 <span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo FOLD_ACCT; ?></span><br />
 <span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->user->Overall_Rank; ?></span>
 <? if ((string) $xmlobj->user->Change_Rank_7days >0 ) { echo '(&uarr;'.(string) $xmlobj->user->Change_Rank_7days.')'; }
@@ -189,18 +192,19 @@ Team Users<br />
 <span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->user->Points_24hr_Avg; ?></span><br />
 <span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->user->Points_Week; ?></span><br />
 <span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->user->WUs; ?></span><br />
+<br />
 <span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->team->Team_Name; ?></span><br />
 <span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->team->Rank; ?></span>
 <? if ((string) $xmlobj->team->Change_Rank_7days >0 ) { echo '(&uarr;'.(string) $xmlobj->team->Change_Rank_7days.')'; }
 	if ((string) $xmlobj->team->Change_Rank_7days <0 ) { echo '(&darr;'.(string) $xmlobj->team->Change_Rank_7days.')'; }
 ?><br />
 <span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->team->Points; ?></span><br />
-<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->team->Users; ?></span> (<? echo (string) $xmlobj->team->Users_Active; ?> active)<br />
+<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->team->Users; ?></span> (<? echo (string) $xmlobj->team->Users_Active; ?> active)
 </div>
 </div>
 <?
 if (get_option('folding_pic') == 'true') {
-	echo '<br /><a href="http://folding.stanford.edu"><img style="border:none;" src="'.$fold_logo.'" alt="Folding@Home" /></a>';
+	echo '<a href="http://folding.stanford.edu"><img style="border:none;" src="'.$fold_logo.'" alt="Folding@Home" /></a>';
 		}
 } else {
 // old ways...
