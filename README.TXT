@@ -6,5 +6,5 @@
 None so far.
 == Screenshots ==1. The widget in the sidebar.2. The admin page.
 == Un-Installation ==* go to the Plugins main menu and find Folding@Home Stats Plus, then click Deactivate * delete the files from your `wp-content/plugins` directory 
-== Change Log ==
+== Change Log ==1.1 Fixed all shortags, Thx Rich!
 1.0 Almost a full rewrite! Stats are more advanced now if you are part of a team.0.9 No more flat file, everything is stored in the database.0.7 Bugfix0.6 Added style options 0.5 Fixed HTML to validate W3C0.2 Added widget title options, cleaned up code0.1 First release

@@ -3,7 +3,7 @@
 Plugin Name: Folding Stats Plus
 Plugin URI: http://www.pross.org.uk/category/plugins/
 Description: This plugin is intended to show the current Folding@Home statistics for a given account. <a href="options-general.php?page=folding-stats-plus/options-folding.php">Settings</a> page.
-Version: 1.0
+Version: 1.1
 Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
@@ -183,23 +183,23 @@ Points<br />
 Users<br />
 </div>
 <div style="position: absolute; left: 50px;">
-<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo FOLD_ACCT; ?></span><br />
-<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->user->Overall_Rank; ?></span>
-<? if ((string) $xmlobj->user->Change_Rank_7days >0 ) { echo '(&uarr;'.(string) $xmlobj->user->Change_Rank_7days.')'; }
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo FOLD_ACCT; ?></span><br />
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->user->Overall_Rank; ?></span>
+<?php if ((string) $xmlobj->user->Change_Rank_7days >0 ) { echo '(&uarr;'.(string) $xmlobj->user->Change_Rank_7days.')'; }
 	if ((string) $xmlobj->user->Change_Rank_7days <0 ) { echo '(&darr;'.(string) $xmlobj->user->Change_Rank_7days.')'; }
 ?><br />
-<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->user->Points; ?></span><br />
-<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->user->Points_24hr_Avg; ?></span><br />
-<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->user->Points_Week; ?></span><br />
-<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->user->WUs; ?></span><br />
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->user->Points; ?></span><br />
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->user->Points_24hr_Avg; ?></span><br />
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->user->Points_Week; ?></span><br />
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->user->WUs; ?></span><br />
 <br />
-<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->team->Team_Name; ?></span><br />
-<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->team->Rank; ?></span>
-<? if ((string) $xmlobj->team->Change_Rank_7days >0 ) { echo '(&uarr;'.(string) $xmlobj->team->Change_Rank_7days.')'; }
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->team->Team_Name; ?></span><br />
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->team->Rank; ?></span>
+<?php if ((string) $xmlobj->team->Change_Rank_7days >0 ) { echo '(&uarr;'.(string) $xmlobj->team->Change_Rank_7days.')'; }
 	if ((string) $xmlobj->team->Change_Rank_7days <0 ) { echo '(&darr;'.(string) $xmlobj->team->Change_Rank_7days.')'; }
 ?><br />
-<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->team->Points; ?></span><br />
-<span style="color: #<? echo get_option('folding_results_color'); ?>; font-weight: <? echo get_option('folding_results_bold') ?>;"><? echo (string) $xmlobj->team->Users; ?></span> (<? echo (string) $xmlobj->team->Users_Active; ?> active)
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->team->Points; ?></span><br />
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->team->Users; ?></span> (<?php echo (string) $xmlobj->team->Users_Active; ?> active)
 </div>
 </div>
 <?

@@ -78,7 +78,7 @@ $fold_team = get_option('folding_team');
 		<div id="folding-stats_settings" class="postbox " >	
   		<h3><?php _e('Personal Settings') ?></h3>
 <div class="inside">
-  		<p><label  for="fold_acct">Account ID:</label><input style="width: 80px;" id="fold_acct" name="fold_acct" type="text" value="<?php echo $fold_acct;?>" /><? if ($fold_acct == 'fold-id') { echo '<font style="color: #ff0000;">Set your FAH name!</font>'; } ?><br />
+  		<p><label  for="fold_acct">Account ID:</label><input style="width: 80px;" id="fold_acct" name="fold_acct" type="text" value="<?php echo $fold_acct;?>" /><?php if ($fold_acct == 'fold-id') { echo '<font style="color: #ff0000;">Set your FAH name!</font>'; } ?><br />
 			<label for="fold_team">Your team:</label>
 			<input style="width: 80px;" id="fold_team" name="fold_team" type="text" value="<?php echo $fold_team;?>" /> To get the advanced statistics enter your team number here.<br />
 			<label for="fold_expy">Cache   :</label>
