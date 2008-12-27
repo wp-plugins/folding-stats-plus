@@ -202,7 +202,7 @@ Users<br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->team->Users; ?></span> (<?php echo (string) $xmlobj->team->Users_Active; ?> active)
 </div>
 </div>
-<?
+<?php
 if (get_option('folding_pic') == 'true') {
 	echo '<a href="http://folding.stanford.edu"><img style="border:none;" src="'.$fold_logo.'" alt="Folding@Home" /></a>';
 		}
