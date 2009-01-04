@@ -71,7 +71,7 @@ add_option('widget_folding_title',$options);
 function folding_init() {
   register_sidebar_widget(__('Foldingstats'), 'widget_folding');
   register_widget_control(array('Foldingstats','widgets'), 'widget_folding_control');
-// add_action('wp_head', 'folding_css', 1); may need this again later!
+  add_action('wp_head', 'folding_head', 1); 
 			}
 add_action("plugins_loaded", "folding_init");
 
@@ -168,38 +168,38 @@ if (get_option('folding_team') >0 ) {
 $foldxml = get_option('folding_xml');
 $xmlobj = simplexml_load_string($foldxml); 
 ?>
-<div style="position: relative;  height: 155px; line-height: 14px; padding-bottom: 2px; padding-top: 10px;">
-<div style="position: absolute; width: 50px;">
-Name<br />
-Rank<br />
+<div id="folding" style="position: relative;  height: 165px; padding-bottom: 10px; padding-top: 10px;">
+<div id="folding_label" style="position: absolute; width: 80px;">
+User Name<br />
+User Rank<br />
 Points<br />
-Pts/24h<br />
-Pts/7D<br />
-WU's<br />
-<span style="text-decoration: underline;">Team</span><br />
-Name<br />
-Rank<br />
-Points<br />
-Users<br />
+Points/24h<br />
+Points/7D<br />
+Work Units<br />
+Team Name<br />
+Team Rank<br />
+Team Points<br />
+Team Users<br />
+Your Rank
 </div>
-<div style="position: absolute; left: 50px;">
+<div id="folding_results" style="position: absolute; left: 80px;">
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo FOLD_ACCT; ?></span><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->user->Overall_Rank, 0, "", ","); ?></span>
-<?php if ((string) $xmlobj->user->Change_Rank_7days >0 ) { echo '(&uarr;'.(string) $xmlobj->user->Change_Rank_7days.')'; }
-	if ((string) $xmlobj->user->Change_Rank_7days <0 ) { echo '(&darr;'.(string) $xmlobj->user->Change_Rank_7days.')'; }
+<?php if ((string) $xmlobj->user->Change_Rank_7days >0 ) { echo '<span class="folding_arrow"> (&uarr;'.(string) $xmlobj->user->Change_Rank_7days.')</span>'; }
+	if ((string) $xmlobj->user->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'.(string) $xmlobj->user->Change_Rank_7days.')</span>'; }
 ?><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->user->Points, 0, "", ","); ?></span><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->user->Points_24hr_Avg, 0, "", ","); ?></span><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->user->Points_Week, 0, "", ","); ?></span><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->user->WUs, 0, "", ","); ?></span><br />
-<br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->team->Team_Name; ?></span><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->team->Rank, 0, "", ","); ?></span>
-<?php if ((string) $xmlobj->team->Change_Rank_7days >0 ) { echo '(&uarr;'.(string) $xmlobj->team->Change_Rank_7days.')'; }
-	if ((string) $xmlobj->team->Change_Rank_7days <0 ) { echo '(&darr;'.(string) $xmlobj->team->Change_Rank_7days.')'; }
+<?php if ((string) $xmlobj->team->Change_Rank_7days >0 ) { echo '<span class="folding_arrow"> (&uarr;'.(string) $xmlobj->team->Change_Rank_7days.')</span>'; }
+	if ((string) $xmlobj->team->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'.(string) $xmlobj->team->Change_Rank_7days.')</span>'; }
 ?><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->team->Points, 0, "", ","); ?></span><br />
-<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->team->Users, 0, "", ","); ?></span> (<?php echo (string) $xmlobj->team->Users_Active; ?> active)
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->team->Users, 0, "", ","); ?></span><span class="folding_arrow"> (<?php echo (string) $xmlobj->team->Users_Active; ?> active)</span><br />
+<span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->user->Team_Rank, 0, "", ","); ?></span>
 </div>
 </div>
 <?
@@ -252,4 +252,13 @@ function get_contents($url) {
 				echo 'This plugin requires you to have either allow_url_fopen or cURL. Please enable allow_url_fopen or install cURL to continue.';
 			}
 		} //end get_contents
+		
+		function folding_head() {
+	$css_url = get_bloginfo("wpurl") . '/wp-content/plugins/folding-stats-plus/folding-def.css';
+	if ( file_exists(TEMPLATEPATH . "/folding.css") ){
+		$css_url = get_bloginfo("template_url") . "/folding.css";
+	}
+	echo "\n" . '<!-- Folding css -->';
+	echo "\n" . '<link rel="stylesheet" href="' . $css_url . '" type="text/css" media="screen" />';
+}
 ?>
