@@ -25,9 +25,10 @@ None so far.
 * delete the files from your `wp-content/plugins` directory 
 == Change Log ==
 1.2.1 Bug fix! Added support for custom css file in template dir
-1.2 Use advanced stats from http://folding.extremeoverclocking.com
-1.1 New admin plugin
+1.2 --
+1.1 Fixed all shortags, Thx Rich!
 1.0 Almost a full rewrite! Stats are more advanced now if you are part of a team.
+    Use advanced stats from http://folding.extremeoverclocking.com
 0.9 No more flat file, everything is stored in the database.
 0.7 Bugfix
 .6 Added style options 
