@@ -1,0 +1,21 @@
+#folding {
+	position: relative;
+	height: 130px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	}
+#folding_label {
+	position: absolute; 
+	width: 90px;
+	}
+#folding_results {
+	position: absolute;
+	left: 90px;
+	}
+/* example...
+
+.folding_arrow {
+	font-style: italic; 
+}
+
+*/
