@@ -187,7 +187,7 @@ Your Rank
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo FOLD_ACCT; ?></span><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->user->Overall_Rank, 0, "", ","); ?></span>
 <?php if ((string) $xmlobj->user->Change_Rank_7days >0 ) { echo '<span class="folding_arrow"> (&uarr;'.(string) $xmlobj->user->Change_Rank_7days.')</span>'; }
-	if ((string) $xmlobj->user->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'.(string) $xmlobj->user->Change_Rank_7days.')</span>'; }
+	if ((string) $xmlobj->user->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'. ereg_replace("[^0-9]", "", (string) $xmlobj->user->Change_Rank_7days).')</span>'; }
 ?><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->user->Points, 0, "", ","); ?></span><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->user->Points_24hr_Avg, 0, "", ","); ?></span><br />
@@ -196,7 +196,7 @@ Your Rank
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo (string) $xmlobj->team->Team_Name; ?></span><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->team->Rank, 0, "", ","); ?></span>
 <?php if ((string) $xmlobj->team->Change_Rank_7days >0 ) { echo '<span class="folding_arrow"> (&uarr;'.(string) $xmlobj->team->Change_Rank_7days.')</span>'; }
-	if ((string) $xmlobj->team->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'.(string) $xmlobj->team->Change_Rank_7days.')</span>'; }
+	if ((string) $xmlobj->team->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'. ereg_replace("[^0-9]", "", (string) $xmlobj->team->Change_Rank_7days).')</span>'; }
 ?><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->team->Points, 0, "", ","); ?></span><br />
 <span style="color: #<?php echo get_option('folding_results_color'); ?>; font-weight: <?php echo get_option('folding_results_bold') ?>;"><?php echo number_format((string) $xmlobj->team->Users, 0, "", ","); ?></span><span class="folding_arrow"> (<?php echo (string) $xmlobj->team->Users_Active; ?> active)</span><br />
