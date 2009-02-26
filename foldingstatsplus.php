@@ -3,7 +3,7 @@
 Plugin Name: Folding Stats Plus
 Plugin URI: http://www.pross.org.uk/category/plugins/
 Description: This plugin is intended to show the current Folding@Home statistics for a given account. <a href="options-general.php?page=folding-stats-plus/options-folding.php">Settings</a> page.
-Version: 1.3
+Version: 1.3.1
 Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
@@ -112,9 +112,14 @@ if (get_option('folding_team') != '0') {
 	//Get the site data and trim to something managable
 	$sFile = file_get_contents($stats_url, False);
 	$sFile = substr($sFile, 0, 4000);
+	if (simplexml_load_string($sFile)) {
 	update_option('folding_xml', $sFile);
 	$expire = mktime(date("H")+FOLD_EXPY, 0, 0, date("m"), date("d"), date("y"));
 	update_option('folding_expire',$expire);
+	} else {
+	$expire = mktime(date("H")+1, 0, 0, date("m"), date("d"), date("y"));
+	update_option('folding_expire',$expire);
+	}
 	} else {
 	$stats_url = 'http://fah-web.stanford.edu/cgi-bin/main.py?qtype=userpage&username=' . FOLD_ACCT;
 	//Get the site data and trim to something managable

@@ -37,6 +37,7 @@ None so far.
 * delete the files from your `wp-content/plugins` directory 
 
 == Change Log ==
+1.3.1 Added error checking to stop crashing if no xml was returned.
 
 1.3	Finally got round to using divs for the legacy stats if no team is used, so you too can use folding.css
 	in the template DIR the div id is folding_leg.
