@@ -44,7 +44,7 @@ global $version;
 		echo $options['title'];
 	echo $after_title;
 	  if (!check_version()):
-	  echo "<strong>".__('Error!!!')."</strong>";
+	  echo "<strong>".__('Error!!!', 'folding')."</strong>";
 	  else:
 draw_table();
 	endif;
@@ -76,11 +76,11 @@ echo '<strong>Error!!</strong>.';
 else:	
 ?>
 <p>
-	<label for="foldingstats-title"><?php _e('Title:') ?></label>
+	<label for="foldingstats-title"><?php _e('Title:', 'folding') ?></label>
 	<input type="text" id="foldingstats-title" name="foldingstats-title" value="<?php echo $options['title'];?>" />
-	<label for="foldingstats-name"><?php _e('Name:') ?></label>
+	<label for="foldingstats-name"><?php _e('Name:', 'folding') ?></label>
 	<input type="text" id="foldingstats-name" name="foldingstats-name" value="<?php echo $options['name'];?>" />
-	<label for="foldingstats-team"><?php _e('Team:') ?></label>
+	<label for="foldingstats-team"><?php _e('Team:', 'folding') ?></label>
 	<input type="text" id="foldingstats-name" name="foldingstats-team" value="<?php echo $options['team'];?>" />
 	<input type="hidden" 
       id="foldingstats-Submit" 
@@ -103,27 +103,27 @@ get_xml();
 $options = get_option("widget_foldingstats");
 $xmlobj = simplexml_load_string($options['xml']);
 if (!$xmlobj):
-_e('FoldingStats error!!');
+_e('FoldingStats error!!', 'folding');
 $options['expire'] = time() + $update;
 update_option("widget_foldingstats", $options);
 else:
 ?>
 <div id="folding">
 <div id="folding_label">
-<?php _e('User Name') ?><br />
-<?php _e('User Rank') ?><br />
-<?php _e('Points') ?><br />
-<?php _e('24h Avg') ?><br />
-<?php _e('This week') ?><br />
-<?php _e('Work Units') ?><br />
-<?php _e('Team Name') ?><br />
-<?php _e('Team Rank') ?><br />
-<?php _e('Team Points') ?><br />
-<?php _e('24hr Avg') ?><br />
-<?php _e('This week') ?><br />
-<?php _e('Work Units') ?><br />
-<?php _e('Team Users') ?><br />
-<?php _e('Your Rank') ?>
+<?php _e('User Name', 'folding') ?><br />
+<?php _e('User Rank', 'folding') ?><br />
+<?php _e('Points', 'folding') ?><br />
+<?php _e('24h Avg', 'folding') ?><br />
+<?php _e('This week', 'folding') ?><br />
+<?php _e('Work Units', 'folding') ?><br />
+<?php _e('Team Name', 'folding') ?><br />
+<?php _e('Team Rank', 'folding') ?><br />
+<?php _e('Team Points', 'folding') ?><br />
+<?php _e('24hr Avg', 'folding') ?><br />
+<?php _e('This week', 'folding') ?><br />
+<?php _e('Work Units', 'folding') ?><br />
+<?php _e('Team Users', 'folding') ?><br />
+<?php _e('Your Rank', 'folding') ?>
 </div>
 <div id="folding_results">
 <?php echo (string) $xmlobj->user->User_Name ?><br />
@@ -144,7 +144,7 @@ else:
 <?php echo number_format((double)$xmlobj->team->Points_24hr_Avg, 0, "", ","); ?><br />
 <?php echo number_format((double)$xmlobj->team->Points_Week, 0, "", ","); ?><br />
 <?php echo number_format((double)$xmlobj->team->WUs, 0, "", ","); ?><br />
-<?php echo number_format((double)$xmlobj->team->Users, 0, "", ","); ?><span class="folding_arrow"> (<?php echo (string) $xmlobj->team->Users_Active; _e(' active)');?></span><br />
+<?php echo number_format((double)$xmlobj->team->Users, 0, "", ","); ?><span class="folding_arrow"> (<?php echo (string) $xmlobj->team->Users_Active; _e(' active)', 'folding');?></span><br />
 <?php echo number_format((double) $xmlobj->user->Team_Rank, 0, "", ","); ?>
 </div>
 </div>
