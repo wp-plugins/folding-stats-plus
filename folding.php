@@ -106,7 +106,7 @@ $options['expire'] = time() + $update;
 update_option("widget_foldingstats", $options);
 else:
 ?>
-<div style="background-color: #3f6daf; padding: 5px 5px 5px 5px;" class="rounded_STYLE rounded">
+<div style="background-color: #3f6daf; padding: 1px 5px 5px 5px;" class="rounded_STYLE rounded">
   <div class="tl"></div><div class="tr"></div>
   <div style="text-align:center; color: #fff;"><?php echo (string) $xmlobj->user->User_Name ?></div>
 
