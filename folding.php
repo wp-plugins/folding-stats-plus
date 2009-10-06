@@ -8,7 +8,7 @@ Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 */
-$version = '1.9-pre';
+$version = '1.9.4-pre';
 $update = 3600;
 /*
 	Code is forked with permission from Jason F. Irwin J?fi's version http://www.j2fi.net/2007/03/23/foldinghome-wordpress-plugin/
@@ -51,8 +51,6 @@ draw_table();
 	  echo $after_widget;
 	  echo '<!-- Next stats refresh in '. (time() - $options['expire']) .' Seconds. Folding-Stats-Plus Version ' . $version . "\n";
 	  echo 'Advanced XML stats provided by http://folding.extremeoverclocking.com/ with permission -->' . "\n";
-echo '
--->';
 }
 
 function foldingstats_control() {
@@ -108,48 +106,46 @@ $options['expire'] = time() + $update;
 update_option("widget_foldingstats", $options);
 else:
 ?>
-<div id="folding">
-<div id="folding_label">
-<?php _e('User Name', 'folding') ?><br />
-<?php _e('User Rank', 'folding') ?><br />
-<?php _e('Points', 'folding') ?><br />
-<?php _e('24h Avg', 'folding') ?><br />
-<?php _e('This week', 'folding') ?><br />
-<?php _e('Work Units', 'folding') ?><br />
-<?php _e('Team Name', 'folding') ?><br />
-<?php _e('Team Rank', 'folding') ?><br />
-<?php _e('Team Points', 'folding') ?><br />
-<?php _e('24hr Avg', 'folding') ?><br />
-<?php _e('This week', 'folding') ?><br />
-<?php _e('Work Units', 'folding') ?><br />
-<?php _e('Team Users', 'folding') ?><br />
-<?php _e('Your Rank', 'folding') ?>
-</div>
-<div id="folding_results">
-<?php echo (string) $xmlobj->user->User_Name ?><br />
-<?php echo number_format((double)$xmlobj->user->Overall_Rank, 0, "", ","); ?>
-<?php if ((string) $xmlobj->user->Change_Rank_7days >0 ) { echo '<span class="folding_arrow"> (&uarr;'.(string) $xmlobj->user->Change_Rank_7days.')'; }
-	if ((string) $xmlobj->user->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'. ereg_replace("[^0-9]", "", (string) $xmlobj->user->Change_Rank_7days).')'; }
-?><br />
-<?php echo number_format((double)$xmlobj->user->Points, 0, "", ","); ?><br />
-<?php echo number_format((double)$xmlobj->user->Points_24hr_Avg, 0, "", ","); ?><br />
-<?php echo number_format((double)$xmlobj->user->Points_Week, 0, "", ","); ?><br />
-<?php echo number_format((double)$xmlobj->user->WUs, 0, "", ","); ?><br />
-<?php echo '<a href="http://folding.extremeoverclocking.com/team_summary.php?s=&amp;t='. $options['team'] . '">' . (string) $xmlobj->team->Team_Name .'</a>'; ?><br />
-<?php echo number_format((double)$xmlobj->team->Rank, 0, "", ","); ?>
+<div style="background-color: #3f6daf; padding: 5px 5px 5px 5px;" class="rounded_STYLE rounded">
+  <div class="tl"></div><div class="tr"></div>
+  <div style="text-align:center; color: #fff;"><?php echo (string) $xmlobj->user->User_Name ?></div>
+
+  <div style="background-color: #E1E1FF; padding: 3px; " class="rounded_STYLE rounded">
+  <div class="tl"></div><div class="tr"></div>
+  <span style="padding: 0px;float:left;"><?php _e('User Rank', 'folding') ?></span><span style="padding:0px; float:right;"><?php echo number_format((double)$xmlobj->user->Overall_Rank, 0, "", ","); ?><?php if ((string) $xmlobj->user->Change_Rank_7days >0 ) { echo '<span class="folding_arrow"> (&uarr;'.(string) $xmlobj->user->Change_Rank_7days.')</span>'; }
+	if ((string) $xmlobj->user->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'. ereg_replace("[^0-9]", "", (string) $xmlobj->user->Change_Rank_7days).')</span>'; }?></span><br />
+  <span style="float: left;"><?php _e('Points', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->user->Points, 0, "", ","); ?></span><br />
+  <span style="float: left;"><?php _e('24h Avg', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->user->Points_24hr_Avg, 0, "", ","); ?></span><br />
+  <span style="float: left;"><?php _e('This week', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->user->Points_Week, 0, "", ","); ?></span><br />
+  <span style="float: left;"><?php _e('Work Units', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->user->WUs, 0, "", ","); ?></span><br />
+  <div class="bl"></div><div class="br"></div>
+  </div>
+  
+    <div style="background-color: #3f6daf;" class="rounded_STYLE rounded">
+  <div class="tl"></div><div class="tr"></div>
+  <div style="text-align:center; color: #fff;"><?php echo '<a style="color: #fff; text-decoration: none !important; border-bottom: none !important;"href="http://folding.extremeoverclocking.com/team_summary.php?s=&amp;t='. $options['team'] . '">' . (string) $xmlobj->team->Team_Name .'</a>'; ?></div>
+    <div class="bl"></div><div class="br"></div>
+	    <div style="background-color: #E1E1FF; padding: 3px;" class="rounded_STYLE rounded">
+  <div class="tl"></div><div class="tr"></div>
+  <span style="float: left;"><?php _e('Rank', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->Rank, 0, "", ","); ?></span><br />
+  <span style="float: left;"><?php _e('Points', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->Points, 0, "", ","); ?></span><br />
+  <span style="float: left;"><?php _e('24h Avg', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->Points_24hr_Avg, 0, "", ","); ?></span><br />
+  <span style="float: left;"><?php _e('This week', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->Points_Week, 0, "", ","); ?></span><br />
+  <span style="float: left;"><?php _e('Work Units', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->WUs, 0, "", ","); ?></span><br />
+  <span style="float: left;"><?php _e('Team Users', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->Users, 0, "", ","); ?><span class="folding_arrow"> (<?php echo (string) $xmlobj->team->Users_Active; _e(')', 'folding');?></span></span><br />
+  <span style="float: left;"><?php _e('Your Rank', 'folding') ?></span><span style="float:right;"><?php echo number_format((double) $xmlobj->user->Team_Rank, 0, "", ","); ?>
 <?php if ((string) $xmlobj->team->Change_Rank_7days >0 ) { echo '<span class="folding_arrow"> (&uarr;'.(string) $xmlobj->team->Change_Rank_7days.')</span>'; }
-	if ((string) $xmlobj->team->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'. ereg_replace("[^0-9]", "", (string) $xmlobj->team->Change_Rank_7days).')</span>'; }
-?><br />
-<?php echo number_format((double)$xmlobj->team->Points, 0, "", ","); ?><br />
-<?php echo number_format((double)$xmlobj->team->Points_24hr_Avg, 0, "", ","); ?><br />
-<?php echo number_format((double)$xmlobj->team->Points_Week, 0, "", ","); ?><br />
-<?php echo number_format((double)$xmlobj->team->WUs, 0, "", ","); ?><br />
-<?php echo number_format((double)$xmlobj->team->Users, 0, "", ","); ?><span class="folding_arrow"> (<?php echo (string) $xmlobj->team->Users_Active; _e(' active)', 'folding');?></span><br />
-<?php echo number_format((double) $xmlobj->user->Team_Rank, 0, "", ","); ?>
-</div>
-</div>
+	if ((string) $xmlobj->team->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'. ereg_replace("[^0-9]", "", (string) $xmlobj->team->Change_Rank_7days).')</span>'; } ?></span><br />
+    <div class="bl"></div><div class="br"></div>
+</div></div>
 
 
+
+
+
+
+
+</div>
 <?php
 endif;
 } //end draw
@@ -184,6 +180,23 @@ function folding_head() {
 	}
 	echo "\n" . '<!-- Folding css -->';
 	echo "\n" . '<link rel="stylesheet" href="' . $css_url . '" type="text/css" media="screen" />' . "\n";
+	echo '
+<style type="text/css">
+.rounded_STYLE
+{
+    background-color: COLOR;          /* if needed */
+    border: none;   /* if needed */
+    -webkit-border-radius: 6px;    /* for Safari */
+    -moz-border-radius: 6px;       /* for Firefox */
+	text-decoration: none;
+	a:link {text-decoration: none; border-bottom: none !important;}
+	a:visited {text-decoration: none; border-bottom: none !important;}
+	a:active {text-decoration: none; border-bottom: none !important;}
+	a:hover {text-decoration: none; border-bottom: none !important;}
+	white-space: no-wrap;
+	clear: both;
+}
+</style>';
 }
 
 function get_contents($url) {
