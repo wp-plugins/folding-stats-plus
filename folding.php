@@ -8,7 +8,7 @@ Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 */
-$version = '1.9.4-pre';
+$version = '1.9.5-pre';
 $update = 3600;
 /*
 	Code is forked with permission from Jason F. Irwin J?fi's version http://www.j2fi.net/2007/03/23/foldinghome-wordpress-plugin/
@@ -106,46 +106,38 @@ $options['expire'] = time() + $update;
 update_option("widget_foldingstats", $options);
 else:
 ?>
-<div style="background-color: #3f6daf; padding: 1px 5px 5px 5px;" class="rounded_STYLE rounded">
+<div id="folding_border_main" class="rounded_STYLE rounded">
   <div class="tl"></div><div class="tr"></div>
   <div style="text-align:center; color: #fff;"><?php echo (string) $xmlobj->user->User_Name ?></div>
 
-  <div style="background-color: #E1E1FF; padding: 3px; " class="rounded_STYLE rounded">
+  <div id="folding_user" class="rounded_STYLE rounded">
   <div class="tl"></div><div class="tr"></div>
-  <span style="padding: 0px;float:left;"><?php _e('User Rank', 'folding') ?></span><span style="padding:0px; float:right;"><?php echo number_format((double)$xmlobj->user->Overall_Rank, 0, "", ","); ?><?php if ((string) $xmlobj->user->Change_Rank_7days >0 ) { echo '<span class="folding_arrow"> (&uarr;'.(string) $xmlobj->user->Change_Rank_7days.')</span>'; }
+  <span class="folding_user" style="float:left;"><?php _e('User Rank', 'folding') ?></span><span class="folding_user_results" style="float:right;"><?php echo number_format((double)$xmlobj->user->Overall_Rank, 0, "", ","); ?><?php if ((string) $xmlobj->user->Change_Rank_7days >0 ) { echo '<span class="folding_arrow"> (&uarr;'.(string) $xmlobj->user->Change_Rank_7days.')</span>'; }
 	if ((string) $xmlobj->user->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'. ereg_replace("[^0-9]", "", (string) $xmlobj->user->Change_Rank_7days).')</span>'; }?></span><br />
-  <span style="float: left;"><?php _e('Points', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->user->Points, 0, "", ","); ?></span><br />
-  <span style="float: left;"><?php _e('24h Avg', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->user->Points_24hr_Avg, 0, "", ","); ?></span><br />
-  <span style="float: left;"><?php _e('This week', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->user->Points_Week, 0, "", ","); ?></span><br />
-  <span style="float: left;"><?php _e('Work Units', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->user->WUs, 0, "", ","); ?></span><br />
+  <span class="folding_user" style="float: left;"><?php _e('Points', 'folding') ?></span><span class="folding_user_results" style="float:right;"><?php echo number_format((double)$xmlobj->user->Points, 0, "", ","); ?></span><br />
+  <span class="folding_user" style="float: left;"><?php _e('24h Avg', 'folding') ?></span><span class="folding_user_results" style="float:right;"><?php echo number_format((double)$xmlobj->user->Points_24hr_Avg, 0, "", ","); ?></span><br />
+  <span class="folding_user" style="float: left;"><?php _e('This week', 'folding') ?></span><span class="folding_user_results" style="float:right;"><?php echo number_format((double)$xmlobj->user->Points_Week, 0, "", ","); ?></span><br />
+  <span class="folding_user" style="float: left;"><?php _e('Work Units', 'folding') ?></span><span class="folding_user_results" style="float:right;"><?php echo number_format((double)$xmlobj->user->WUs, 0, "", ","); ?></span><br />
   <div class="bl"></div><div class="br"></div>
   </div>
   
-    <div style="background-color: #3f6daf;" class="rounded_STYLE rounded">
+    <div id="folding_border" class="rounded_STYLE rounded">
   <div class="tl"></div><div class="tr"></div>
   <div style="text-align:center; color: #fff;"><?php echo '<a style="color: #fff; text-decoration: none !important; border-bottom: none !important;"href="http://folding.extremeoverclocking.com/team_summary.php?s=&amp;t='. $options['team'] . '">' . (string) $xmlobj->team->Team_Name .'</a>'; ?></div>
     <div class="bl"></div><div class="br"></div>
-	    <div style="background-color: #E1E1FF; padding: 3px;" class="rounded_STYLE rounded">
+	    <div id="folding_team" class="rounded_STYLE rounded">
   <div class="tl"></div><div class="tr"></div>
-  <span style="float: left;"><?php _e('Rank', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->Rank, 0, "", ","); ?></span><br />
-  <span style="float: left;"><?php _e('Points', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->Points, 0, "", ","); ?></span><br />
-  <span style="float: left;"><?php _e('24h Avg', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->Points_24hr_Avg, 0, "", ","); ?></span><br />
-  <span style="float: left;"><?php _e('This week', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->Points_Week, 0, "", ","); ?></span><br />
-  <span style="float: left;"><?php _e('Work Units', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->WUs, 0, "", ","); ?></span><br />
-  <span style="float: left;"><?php _e('Team Users', 'folding') ?></span><span style="float:right;"><?php echo number_format((double)$xmlobj->team->Users, 0, "", ","); ?><span class="folding_arrow"> (<?php echo (string) $xmlobj->team->Users_Active; _e(')', 'folding');?></span></span><br />
-  <span style="float: left;"><?php _e('Your Rank', 'folding') ?></span><span style="float:right;"><?php echo number_format((double) $xmlobj->user->Team_Rank, 0, "", ","); ?>
+  <span class="folding_team" style="float: left;"><?php _e('Rank', 'folding') ?></span><span class="folding_team_results" style="float:right;"><?php echo number_format((double)$xmlobj->team->Rank, 0, "", ","); ?></span><br />
+  <span class="folding_team" style="float: left;"><?php _e('Points', 'folding') ?></span><span class="folding_team_results" style="float:right;"><?php echo number_format((double)$xmlobj->team->Points, 0, "", ","); ?></span><br />
+  <span class="folding_team" style="float: left;"><?php _e('24h Avg', 'folding') ?></span><span class="folding_team_results" style="float:right;"><?php echo number_format((double)$xmlobj->team->Points_24hr_Avg, 0, "", ","); ?></span><br />
+  <span class="folding_team" style="float: left;"><?php _e('This week', 'folding') ?></span><span class="folding_team_results" style="float:right;"><?php echo number_format((double)$xmlobj->team->Points_Week, 0, "", ","); ?></span><br />
+  <span class="folding_team" style="float: left;"><?php _e('Work Units', 'folding') ?></span><span class="folding_team_results" style="float:right;"><?php echo number_format((double)$xmlobj->team->WUs, 0, "", ","); ?></span><br />
+  <span class="folding_team" style="float: left;"><?php _e('Team Users', 'folding') ?></span><span class="folding_team_results" style="float:right;"><?php echo number_format((double)$xmlobj->team->Users, 0, "", ","); ?><span class="folding_arrow"> (<?php echo (string) $xmlobj->team->Users_Active; _e(')', 'folding');?></span></span><br />
+  <span class="folding_team" style="float: left;"><?php _e('Your Rank', 'folding') ?></span><span class="folding_team_results" style="float:right;"><?php echo number_format((double) $xmlobj->user->Team_Rank, 0, "", ","); ?>
 <?php if ((string) $xmlobj->team->Change_Rank_7days >0 ) { echo '<span class="folding_arrow"> (&uarr;'.(string) $xmlobj->team->Change_Rank_7days.')</span>'; }
 	if ((string) $xmlobj->team->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'. ereg_replace("[^0-9]", "", (string) $xmlobj->team->Change_Rank_7days).')</span>'; } ?></span><br />
     <div class="bl"></div><div class="br"></div>
-</div></div>
-
-
-
-
-
-
-
-</div>
+</div></div></div>
 <?php
 endif;
 } //end draw
@@ -174,29 +166,12 @@ function check_version() {
 }  
 
 function folding_head() {
-	$css_url = get_bloginfo("wpurl") . '/wp-content/plugins/folding-stats-plus/css/folding-def.css';
-	if ( file_exists(TEMPLATEPATH . "/folding.css") ){
+echo "\n" . '<!-- Folding css -->';
+echo "\n" . '<link rel="stylesheet" href="' . get_bloginfo("wpurl") . '/wp-content/plugins/folding-stats-plus/css/folding-def.css" type="text/css" media="screen" />' . "\n";
+if ( file_exists(TEMPLATEPATH . "/folding.css") ):
 		$css_url = get_bloginfo("template_url") . "/folding.css";
-	}
-	echo "\n" . '<!-- Folding css -->';
-	echo "\n" . '<link rel="stylesheet" href="' . $css_url . '" type="text/css" media="screen" />' . "\n";
-	echo '
-<style type="text/css">
-.rounded_STYLE
-{
-    background-color: COLOR;          /* if needed */
-    border: none;   /* if needed */
-    -webkit-border-radius: 6px;    /* for Safari */
-    -moz-border-radius: 6px;       /* for Firefox */
-	text-decoration: none;
-	a:link {text-decoration: none; border-bottom: none !important;}
-	a:visited {text-decoration: none; border-bottom: none !important;}
-	a:active {text-decoration: none; border-bottom: none !important;}
-	a:hover {text-decoration: none; border-bottom: none !important;}
-	white-space: no-wrap;
-	clear: both;
-}
-</style>';
+		echo "\n" . '<link rel="stylesheet" href="' . $css_url . '" type="text/css" media="screen" />' . "\n";
+		endif;
 }
 
 function get_contents($url) {

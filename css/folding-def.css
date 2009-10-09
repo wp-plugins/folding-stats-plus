@@ -1,21 +1,37 @@
-#folding {
-	position: relative;
-	height: 170px;
-	padding-bottom: 10px;
-	padding-top: 10px;
+.rounded_STYLE {
+    -webkit-border-radius: 6px;    /* for Safari */
+    -moz-border-radius: 6px;       /* for Firefox */
+	text-decoration: none;
+	a:link {text-decoration: none; border-bottom: none !important;}
+	a:visited {text-decoration: none; border-bottom: none !important;}
+	a:active {text-decoration: none; border-bottom: none !important;}
+	a:hover {text-decoration: none; border-bottom: none !important;}
+	white-space: no-wrap;
+	clear: both;
+}
+#folding_border_main {
+	background-color: #3f6daf;
+	padding: 1px 5px 5px 5px;
 	}
-#folding_leg {
-	position: relative;
-	height: 55px;
-	padding-bottom: 10px;
-	padding-top: 10px;
+#folding_border {
+	background-color: #3f6daf;
 	}
-#folding_label {
-	position: absolute;
- 	width: 90px;
+#folding_user {
+	background-color: #E1E1FF;
+	padding: 3px; 
 	}
-#folding_results {
-	position: absolute;
-	left: 90px;
+#folding_team {
+	background-color: #E1E1FF;
+	padding: 3px; 
 	}
-/* example....folding_arrow {	font-style: italic; }*/
+
+.folding_user {
+	}
+.folding_user_results {}	
+.folding_team {
+	}
+.folding_team_results {
+	}
+.folding_arrow {
+	font-style: italic;
+	}
