@@ -10,27 +10,28 @@
 	clear: both;
 }
 #folding_border_main {
-	background-color: #3f6daf;
 	padding: 1px 5px 5px 5px;
 	}
 #folding_border {
-	background-color: #3f6daf;
 	}
 #folding_user {
-	background-color: #E1E1FF;
 	padding: 3px; 
 	}
 #folding_team {
-	background-color: #E1E1FF;
 	padding: 3px; 
 	}
 
 .folding_user {
+	float: feft;
 	}
-.folding_user_results {}	
+.folding_user_results {
+	float: right;
+	}	
 .folding_team {
+	float: feft;
 	}
 .folding_team_results {
+	float: right;
 	}
 .folding_arrow {
 	font-style: italic;
