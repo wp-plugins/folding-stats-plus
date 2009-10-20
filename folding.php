@@ -8,7 +8,7 @@ Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 */
-$version = '2.0-RC1';
+$version = '2.0-RC2';
 $update = 3600;
 /*
 	Code is forked with permission from Jason F. Irwin J?fi's version http://www.j2fi.net/2007/03/23/foldinghome-wordpress-plugin/
@@ -26,7 +26,7 @@ $update = 3600;
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 add_action("plugins_loaded", "foldingstats_init");
-
+register_activation_hook(__FILE__, 'folding_activation');
 function foldingstats_init() {
 	register_sidebar_widget('Folding-Stats-Plus', 'widget_foldingstats');
 	register_widget_control('Folding-Stats-Plus', 'foldingstats_control');
@@ -180,9 +180,6 @@ global $options;
 if (!$options):	
 $options = get_option("widget_foldingstats");
 endif;
-
-
-
 $url = 'http://folding.extremeoverclocking.com/xml/user_summary.php?un=' . $options['name'] . '&t=' . $options['team'];
 //check if xml exists?
 if ( !$options['xml'] ):
@@ -200,7 +197,7 @@ endif;
 }
 
 function check_version() {  
-     return (floatval(phpversion()) >=5.0  AND !!function_exists("curl_init") ? TRUE : FALSE);  
+     return (floatval(phpversion()) >=5.0 ? TRUE : FALSE);  
 }  
 
 function folding_head() {
@@ -213,16 +210,36 @@ if ( file_exists(TEMPLATEPATH . "/folding.css") ):
 }
 
 function get_contents($url) {
-			global $version;
-			$string = 'Folding-Stats-Plus for Wordpress V'.$version;
-			$ch = curl_init();
-			$timeout = 5; // set to zero for no timeout
-			curl_setopt ($ch, CURLOPT_URL, $url);
-			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-			curl_setopt($ch, CURLOPT_USERAGENT, $string);
-			$file_contents = curl_exec($ch);
-			curl_close($ch);
-			return $file_contents;
+global $version;
+$headers = 'Folding-Stats-Plus for Wordpress V'.$version;
+$request = new WP_Http;
+$result = $request->request( $url , $headers );
+return $result['body'];
+}
+
+function folding_activation()
+{
+    if ( get_option("folding_xml") ):
+// old data exists...lets try to upgrade...
+$options = get_option("widget_foldingstats");
+if (!is_array( $options )):
+		$options = array(
+	  	'title' => 'Folding-stats',
+	  	'name' => get_option('folding_acct'),
+		'team' => get_option('folding_team'),
+		'outer' => '3f6daf',
+		'inner' => 'E1E1FF'		
+	  	);
+endif;
+	delete_option('folding_acct');
+	delete_option('folding_expire');
+	delete_option('folding_expy');
+	delete_option('folding_pic');
+	delete_option('folding_results_bold');
+	delete_option('folding_results_color');
+	delete_option('folding_results_team');
+	delete_option('folding_team');
+	delete_option('folding_xml');
+endif;
 }
 ?>
