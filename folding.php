@@ -32,7 +32,7 @@ function foldingstats_init() {
 	register_widget_control('Folding-Stats-Plus', 'foldingstats_control');
 	add_action('wp_head', 'folding_head', 12); 
 	if ( is_admin() ): 
-	wp_register_script( 'jscolor', get_stylesheet_directory_uri() . '/jscolor/jscolor.js' );
+	wp_register_script( 'jscolor', WP_PLUGIN_URL . '/folding-stats-plus/jscolor/jscolor.js' );
 	wp_enqueue_script( 'jscolor' );
 	endif;
 			$currentLocale = get_locale();
@@ -82,8 +82,8 @@ endif;
 	  	'title' => 'Folding-stats',
 	  	'name' => 'Simon_P',
 		'team' => '35216',
-		'outer' => '3f6daf',
-		'inner' => 'E1E1FF'
+		'outer' => '#3f6daf',
+		'inner' => '#E1E1FF'
 		);
 	}      
 	if ($_POST['foldingstats-Submit']) {
@@ -227,8 +227,8 @@ if (!is_array( $options )):
 	  	'title' => 'Folding-stats',
 	  	'name' => get_option('folding_acct'),
 		'team' => get_option('folding_team'),
-		'outer' => '3f6daf',
-		'inner' => 'E1E1FF'		
+		'outer' => '#3f6daf',
+		'inner' => '#E1E1FF'		
 	  	);
 endif;
 	delete_option('folding_acct');
