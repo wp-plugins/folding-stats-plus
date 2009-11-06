@@ -8,7 +8,7 @@ Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 */
-$version = '2.0-RC3';
+$version = '2.0-RC4';
 $update = 3600;
 /*
 	Code is forked with permission from Jason F. Irwin J?fi's version http://www.j2fi.net/2007/03/23/foldinghome-wordpress-plugin/
@@ -68,9 +68,12 @@ else:
 	draw_table();
 endif;
 echo $after_widget;
-echo '<!-- Next stats refresh in '. (time() - $options['expire']) .' Seconds. Folding-Stats-Plus Version ' . $version . "\n";
+echo '<!--
+Folding-Stats-Plus Version ' . $version . "\n";
+echo 'Next stats refresh in '. (time() - $options['expire']) * -1 .' Seconds.' . "\n";
 echo 'Advanced XML stats provided by http://folding.extremeoverclocking.com/ with permission ' . "\n";
-echo 'http://folding.extremeoverclocking.com/xml/user_summary.php?un=' . $options['name'] . '&t=' . $options['team'] . ' -->';
+echo 'http://folding.extremeoverclocking.com/xml/user_summary.php?un=' . $options['name'] . '&t=' . $options['team'] . "\n";
+echo ' -->';
 }
 
 function foldingstats_control() {
@@ -200,7 +203,7 @@ function check_version() {
 
 function folding_head() {
 echo "\n" . '<!-- Folding css -->';
-echo "\n" . '<style type="text/css" media="screen">@import url(' . get_bloginfo("wpurl") . '/wp-content/plugins/folding-stats-plus/css/folding-def.css);' . "\n</style>";
+echo "\n" . '<style type="text/css" media="screen">@import url(' . WP_PLUGIN_URL . '/folding-stats-plus/css/folding-def.css);' . "\n</style>";
 if ( file_exists(TEMPLATEPATH . "/folding.css") ):
 	$css_url = get_bloginfo("template_url") . "/folding.css";
 	echo "\n" . '<link rel="stylesheet" href="' . $css_url . '" type="text/css" media="screen" />' . "\n";
