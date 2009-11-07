@@ -8,7 +8,7 @@ Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 */
-$version = '2.0-RC4';
+$version = '2.0-RC5';
 $update = 3600;
 /*
 	Code is forked with permission from Jason F. Irwin J?fi's version http://www.j2fi.net/2007/03/23/foldinghome-wordpress-plugin/
@@ -54,8 +54,8 @@ if (!is_array( $options )) {
   	'title' => 'Folding-stats',
   	'name' => 'Simon_P',
 	'team' => '35216',
-	'outer' => '3f6daf',
-	'inner' => 'E1E1FF'		
+	'outer' => '#3f6daf',
+	'inner' => '#E1E1FF'		
   	);
 }      
 echo $before_widget;
@@ -242,5 +242,12 @@ if ( get_option("folding_xml") ):
 	delete_option('folding_team');
 	delete_option('folding_xml');
 endif;
+}
+if ( function_exists('register_uninstall_hook') )
+	register_uninstall_hook(__FILE__, 'folding_deinstall');
+ 
+function folding_deinstall() {
+ 
+	delete_option('widget_foldingstats');
 }
 ?>
