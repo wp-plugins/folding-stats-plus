@@ -2,13 +2,13 @@
 /*
 Plugin Name: Folding Stats Plus
 Plugin URI: http://www.pross.org.uk/category/plugins/
-Description: This plugin is intended to show the current Folding@Home statistics for a given account. <a href="options-general.php?page=folding-stats-plus/options-folding.php">Settings</a> page.
+Description: This plugin is intended to show the current Folding@Home statistics for a given account.
 Version: 2.0
 Author: Simon Prosser
 Author URI: http://www.pross.org.uk
 Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
 */
-$version = '2.0-RC5';
+$version = '2.0.1rc';
 $update = 3600;
 /*
 	Code is forked with permission from Jason F. Irwin J?fi's version http://www.j2fi.net/2007/03/23/foldinghome-wordpress-plugin/
@@ -44,13 +44,13 @@ if(!empty($currentLocale)) {
 
 function widget_foldingstats($args) {
 global $version;
-global $options;
+global $fold_options;
 extract($args);
-if (!$options):	
-	$options = get_option("widget_foldingstats");
+if (!$fold_options):	
+	$fold_options = get_option("widget_foldingstats");
 endif;
-if (!is_array( $options )) {
-	$options = array(
+if (!is_array( $fold_options )) {
+	$fold_options = array(
   	'title' => 'Folding-stats',
   	'name' => 'Simon_P',
 	'team' => '35216',
@@ -60,7 +60,7 @@ if (!is_array( $options )) {
 }      
 echo $before_widget;
 echo $before_title;
-echo $options['title'];
+echo $fold_options['title'];
 echo $after_title;
 if (!check_version()):
 	echo "<strong>".__('Error!!!', 'folding')."</strong>";
@@ -70,19 +70,19 @@ endif;
 echo $after_widget;
 echo '<!--
 Folding-Stats-Plus Version ' . $version . "\n";
-echo 'Next stats refresh in '. (time() - $options['expire']) * -1 .' Seconds.' . "\n";
+echo 'Next stats refresh in '. (time() - $fold_options['expire']) * -1 .' Seconds.' . "\n";
 echo 'Advanced XML stats provided by http://folding.extremeoverclocking.com/ with permission ' . "\n";
-echo 'http://folding.extremeoverclocking.com/xml/user_summary.php?un=' . $options['name'] . '&t=' . $options['team'] . "\n";
+echo 'http://folding.extremeoverclocking.com/xml/user_summary.php?un=' . $fold_options['name'] . '&t=' . $fold_options['team'] . "\n";
 echo ' -->';
 }
 
 function foldingstats_control() {
-global $options;
-if (!$options):	
-	$options = get_option("widget_foldingstats");
+global $fold_options;
+if (!$fold_options):	
+	$fold_options = get_option("widget_foldingstats");
 endif;
-if (!is_array( $options )) {
-	$options = array(
+if (!is_array( $fold_options )) {
+	$fold_options = array(
   	'title' => 'Folding-stats',
   	'name' => 'Simon_P',
 	'team' => '35216',
@@ -91,13 +91,13 @@ if (!is_array( $options )) {
 	);
 }      
 if ($_POST['foldingstats-Submit']) {
-	$options['title'] = htmlspecialchars($_POST['foldingstats-title']);
-	$options['name'] =  htmlspecialchars($_POST['foldingstats-name']);
-	$options['team'] =  htmlspecialchars($_POST['foldingstats-team']);
-	$options['outer'] =  htmlspecialchars($_POST['foldingstats-outer']);
-	$options['inner'] =  htmlspecialchars($_POST['foldingstats-inner']);
-	$options['expire'] = time() + 1; // force cache to reset...
-	update_option("widget_foldingstats", $options);
+	$fold_options['title'] = htmlspecialchars($_POST['foldingstats-title']);
+	$fold_options['name'] =  htmlspecialchars($_POST['foldingstats-name']);
+	$fold_options['team'] =  htmlspecialchars($_POST['foldingstats-team']);
+	$fold_options['outer'] =  htmlspecialchars($_POST['foldingstats-outer']);
+	$fold_options['inner'] =  htmlspecialchars($_POST['foldingstats-inner']);
+	$fold_options['expire'] = time() + 1; // force cache to reset...
+	update_option("widget_foldingstats", $fold_options);
 }
 if (!check_version()):
 	echo '<strong>PHP5 needed.</strong>.';
@@ -105,15 +105,15 @@ else:
 ?>
 <p>
 <label for="foldingstats-title"><?php _e('Title:', 'folding') ?></label>
-<input type="text" id="foldingstats-title" name="foldingstats-title" value="<?php echo $options['title'];?>" />
+<input type="text" id="foldingstats-title" name="foldingstats-title" value="<?php echo $fold_options['title'];?>" />
 <label for="foldingstats-name"><?php _e('Name:', 'folding') ?></label>
-<input type="text" id="foldingstats-name" name="foldingstats-name" value="<?php echo $options['name'];?>" />
+<input type="text" id="foldingstats-name" name="foldingstats-name" value="<?php echo $fold_options['name'];?>" />
 <label for="foldingstats-team"><?php _e('Team:', 'folding') ?></label>
-<input type="text" id="foldingstats-team" name="foldingstats-team" value="<?php echo $options['team'];?>" />
+<input type="text" id="foldingstats-team" name="foldingstats-team" value="<?php echo $fold_options['team'];?>" />
 <label for="foldingstats-outer"><?php _e('Outer:', 'folding') ?></label>
-<input type="text" id="foldingstats-outer" name="foldingstats-outer" class="color {hash:true}" value="<?php echo $options['outer'];?>" />	
+<input type="text" id="foldingstats-outer" name="foldingstats-outer" class="color {hash:true}" value="<?php echo $fold_options['outer'];?>" />	
 <label for="foldingstats-inner"><?php _e('Inner:', 'folding') ?></label>
-<input type="text" id="foldingstats-inner" name="foldingstats-inner" class="color {hash:true}" value="<?php echo $options['inner'];?>" />
+<input type="text" id="foldingstats-inner" name="foldingstats-inner" class="color {hash:true}" value="<?php echo $fold_options['inner'];?>" />
 <input type="hidden" id="foldingstats-Submit" name="foldingstats-Submit" value="1" />
 </p>
 <?php
@@ -123,21 +123,21 @@ endif;
 function draw_table() {
 global $update;
 get_xml();
-global $options;
-if (!$options):	
-	$options = get_option("widget_foldingstats");
+global $fold_options;
+if (!$fold_options):	
+	$fold_options = get_option("widget_foldingstats");
 endif;
-$xmlobj = simplexml_load_string($options['xml']);
+$xmlobj = simplexml_load_string($fold_options['xml']);
 if (!$xmlobj):
 	_e('FoldingStats error!!', 'folding');
-	$options['expire'] = time() + $update;
-	update_option("widget_foldingstats", $options);
+	$fold_options['expire'] = time() + $update;
+	update_option("widget_foldingstats", $fold_options);
 else:
 ?>
-<div id="folding_border_main" style="background-color: <?php echo $options['outer']; ?>;" class="rounded_STYLE rounded">
+<div id="folding_border_main" style="background-color: <?php echo $fold_options['outer']; ?>;" class="rounded_STYLE rounded">
 <div class="tl"></div><div class="tr"></div>
 <div style="text-align:center; color: #fff;"><?php echo (string) $xmlobj->user->User_Name ?></div>
-<div id="folding_user"  style="background-color: <?php echo $options['inner']; ?>;" class="rounded_STYLE rounded">
+<div id="folding_user"  style="background-color: <?php echo $fold_options['inner']; ?>;" class="rounded_STYLE rounded">
 <div class="tl"></div><div class="tr"></div>
 <span class="folding_user" style="float:left;"><?php _e('User Rank', 'folding') ?></span><span class="folding_user_results" ><?php echo number_format((double)$xmlobj->user->Overall_Rank, 0, "", ","); ?><?php if ((string) $xmlobj->user->Change_Rank_7days >0 ) { echo '<span class="folding_arrow"> (&uarr;'.(string) $xmlobj->user->Change_Rank_7days.')</span>'; }
 if ((string) $xmlobj->user->Change_Rank_7days <0 ) { echo '<span class="folding_arrow"> (&darr;'. ereg_replace("[^0-9]", "", (string) $xmlobj->user->Change_Rank_7days).')</span>'; }?></span><br />
@@ -147,11 +147,11 @@ if ((string) $xmlobj->user->Change_Rank_7days <0 ) { echo '<span class="folding_
 <span class="folding_user" ><?php _e('Work Units', 'folding') ?></span><span class="folding_user_results" ><?php echo number_format((double)$xmlobj->user->WUs, 0, "", ","); ?></span><br />
 <div class="bl"></div><div class="br"></div>
 </div>
-<div id="folding_border"  style="background-color: <?php echo $options['outer']; ?>;" class="rounded_STYLE rounded">
+<div id="folding_border"  style="background-color: <?php echo $fold_options['outer']; ?>;" class="rounded_STYLE rounded">
 <div class="tl"></div><div class="tr"></div>
-<div style="text-align:center; color: #fff;"><?php echo '<a style="color: #fff; text-decoration: none !important; border-bottom: none !important;" href="http://folding.extremeoverclocking.com/team_summary.php?s=&amp;t='. $options['team'] . '">' . (string) $xmlobj->team->Team_Name .'</a>'; ?></div>
+<div style="text-align:center; color: #fff;"><?php echo '<a style="color: #fff; text-decoration: none !important; border-bottom: none !important;" href="http://folding.extremeoverclocking.com/team_summary.php?s=&amp;t='. $fold_options['team'] . '">' . (string) $xmlobj->team->Team_Name .'</a>'; ?></div>
 <div class="bl"></div><div class="br"></div>
-<div id="folding_team"  style="background-color: <?php echo $options['inner']; ?>;" class="rounded_STYLE rounded">
+<div id="folding_team"  style="background-color: <?php echo $fold_options['inner']; ?>;" class="rounded_STYLE rounded">
 <div class="tl"></div><div class="tr"></div>
 <span class="folding_team" ><?php _e('Rank', 'folding') ?></span><span class="folding_team_results" ><?php echo number_format((double)$xmlobj->team->Rank, 0, "", ","); ?></span><br />
 <span class="folding_team" ><?php _e('Points', 'folding') ?></span><span class="folding_team_results" ><?php echo number_format((double)$xmlobj->team->Points, 0, "", ","); ?></span><br />
@@ -170,31 +170,31 @@ endif;
 
 function get_xml() {
 global $update;
-global $options;
-if (!$options):	
-	$options = get_option("widget_foldingstats");
+global $fold_options;
+if (!$fold_options):	
+	$fold_options = get_option("widget_foldingstats");
 endif;
-$url = 'http://folding.extremeoverclocking.com/xml/user_summary.php?un=' . $options['name'] . '&t=' . $options['team'];
+$url = 'http://folding.extremeoverclocking.com/xml/user_summary.php?un=' . $fold_options['name'] . '&t=' . $fold_options['team'];
 //check if xml exists?
-if ( !$options['xml'] ):
-	$options['xml'] = get_contents($url);
-	$options['expire'] = time() + $update;
+if ( !$fold_options['xml'] ):
+	$fold_options['xml'] = get_contents($url);
+	$fold_options['expire'] = time() + $update;
 else: //xml exists so check if stale...
 	$today = time();
-		if ($options['expire'] < $today):
+		if ($fold_options['expire'] < $today):
 		$xml = get_contents($url);
 		//check for valid xml
 		$xmlobj = simplexml_load_string($xml);
 		if (!$xmlobj):
 			//xml no good! site maybe down? reset timer and try again in a few mins...
-			$options['expire'] = time() + 900;
+			$fold_options['expire'] = time() + 900;
 		else:
-			$options['xml'] = $xml;
-			$options['expire'] = time() + $update;
+			$fold_options['xml'] = $xml;
+			$fold_options['expire'] = time() + $update;
 		endif;
 	endif;
 endif;
-update_option("widget_foldingstats", $options);
+update_option("widget_foldingstats", $fold_options);
 }
 
 function check_version() {  
@@ -222,9 +222,9 @@ function folding_activation()
 {
 if ( get_option("folding_xml") ):
 	// old data exists...lets try to upgrade...
-	$options = get_option("widget_foldingstats");
-	if (!is_array( $options )):
-		$options = array(
+	$fold_options = get_option("widget_foldingstats");
+	if (!is_array( $fold_options )):
+		$fold_options = array(
 	  	'title' => 'Folding-stats',
 	  	'name' => get_option('folding_acct'),
 		'team' => get_option('folding_team'),
@@ -241,6 +241,15 @@ if ( get_option("folding_xml") ):
 	delete_option('folding_results_team');
 	delete_option('folding_team');
 	delete_option('folding_xml');
+else:
+	$fold_options = array(
+  	'title' => 'Folding-stats',
+  	'name' => 'Simon_P',
+	'team' => '35216',
+	'outer' => '#3f6daf',
+	'inner' => '#E1E1FF'
+	);
+update_option("widget_foldingstats", $fold_options);
 endif;
 }
 if ( function_exists('register_uninstall_hook') )
