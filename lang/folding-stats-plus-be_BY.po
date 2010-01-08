@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Folding-Stats-Plus\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/folding-stats-plus\n"
+"POT-Creation-Date: 2009-10-10 16:25+0000\n"
+"PO-Revision-Date: 2010-01-08 21:48+0200\n"
+"Last-Translator: Fat Cow <zhr@tut.by>\n"
+"Language-Team: FatCow <zhr@tut.by>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Belarusian\n"
+"X-Poedit-Country: BELARUS\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: folding.php:63
+msgid "Error!!!"
+msgstr "Ошибка!!!"
+
+#: folding.php:100
+msgid "Title:"
+msgstr "Заголовок:"
+
+#: folding.php:103
+msgid "Name:"
+msgstr "Имя:"
+
+#: folding.php:106
+msgid "Team:"
+msgstr "Команда:"
+
+#: folding.php:109
+msgid "Outer:"
+msgstr "Космическое:"
+
+#: folding.php:112
+msgid "Inner:"
+msgstr "Внутренние:"
+
+#: folding.php:133
+msgid "FoldingStats error!!"
+msgstr "FoldingStats ошибка!!"
+
+#: folding.php:144
+msgid "User Rank"
+msgstr "Пользовательский рейтинг"
+
+#: folding.php:146
+#: folding.php:160
+msgid "Points"
+msgstr "Точки"
+
+#: folding.php:147
+#: folding.php:161
+msgid "24h Avg"
+msgstr "24h Avg"
+
+#: folding.php:148
+#: folding.php:162
+msgid "This week"
+msgstr "Эта неделя"
+
+#: folding.php:149
+#: folding.php:163
+msgid "Work Units"
+msgstr "Предприятия и учреждения"
+
+#: folding.php:159
+msgid "Rank"
+msgstr "Ранг"
+
+#: folding.php:164
+msgid "Team Users"
+msgstr "Члены компании"
+
+#: folding.php:165
+msgid "Your Rank"
+msgstr "Ваш ранг"
+
