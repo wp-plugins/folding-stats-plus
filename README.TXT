@@ -1,2 +1,2 @@
 === Folding Stats Plus ===
-Stable tag: 2.0.2
+Stable tag: 2.0.3
